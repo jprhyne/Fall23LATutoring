@@ -1,6 +1,10 @@
-\documentclass[answers]{exam}
-
-% Use mystyle file. This is a congolmeration of things I've used over the years. Most is stolen from either previous professors or stack overflow. It may or may not be cited. Assume I didn't come up with any of it myself
+% Hacky way of allowing us to compile this with and without answers using the makefile in this folder
+\ifdefined\isanswers
+    \documentclass[answers]{exam}
+\else
+    \documentclass{exam}
+\fi
+% Use mystyle file. This is a congolmeration of things I've used over the years. Most is stolen from either previous professors or stack overflow. It may or may not be cited. Assume I didn't come up with any of it myself.
 \usepackage{mystyle}
 
 \title{Bin 1 Problems}
@@ -17,8 +21,30 @@ This document holds problems that fit into the Bin 1 according to the prelim syl
 The problems are listed in most recent first. IE the first question is from August 2023, second is from January 2023, etc. In addition, the proofs provided are my own to complement the ones posted by the committees of previous years.
 \begin{questions}
     \question Let $T$ be a linear map $T:U\rightarrow V$ and $S$ be a linear map $S:V\rightarrow W$.\\
-    Prove that $\dim U-\dim V \leq \dim\null ST - \dim\null S$.
-    \question Suppose $U,W$ are subspaces of a finite-dimensional vector space $V.$
+    Prove that $\dim U-\dim V \leq \dim\nullS ST - \dim\nullS S$.
+    \begin{solution}\,\\
+        \underline{\textbf{Solution with intuition building sprinkled in}}\\
+        This problem uses the rank nullity theorem (Axler calls this the fundamental theorem of linear maps).
+
+        We can get this intuition from the fact that we are being asked to relate the dimension of spaces to the dimension of the range/null space of a linear map FROM these spaces.
+
+        Reminder of the rank nullity theorem:
+        \begin{theorem}\label{thm:RN}
+            If $U,V$ are vector spaces, and $T\in\mathcal{L}\left(U,V\right)$, then
+            \begin{equation}\label{eq:RN}
+                \mathsf{dim}\, U = \mathsf{dim}\,\range T + \mathsf{dim}\,\mathsf{null}\, T
+            \end{equation}
+        \end{theorem}
+
+        Well, this would introduce a dimension based on ranges. But we'll hope it goes away through some algebra or hiding it behind the $\leq$ operator.
+
+        Since we want to have $\dim\nullS ST$ and $\dim\nullS S$ present, we should try to use theorem \ref{thm:RN} in a way that would give us these operators on the right side.
+
+        See that because $T$ maps from $U$ to $V$ and $S$ maps from $V$ to $W$
+        
+        \underline{\textbf{Proof written up properly for the prelim}}\\
+    \end{solution}
+    \question Suppose $U,W$ are subspaces of a finite-dimensional vector space $V$.
     \begin{parts}
         \part Show that $\dim \left(U\cap W\right) = \dim U + \dim W - \dim\left(U + W\right)$
         \part Let $n=\dim V$. Show that if $k<n$, then an intersection of $k$ subspaces of dimension $n-1$ always has dimension at least $n-k$.

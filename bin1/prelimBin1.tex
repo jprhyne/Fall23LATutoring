@@ -1,0 +1,44 @@
+\documentclass[answers]{exam}
+
+% Use mystyle file. This is a congolmeration of things I've used over the years. Most is stolen from either previous professors or stack overflow. It may or may not be cited. Assume I didn't come up with any of it myself
+\usepackage{mystyle}
+
+\title{Bin 1 Problems}
+\date{\today}
+\author{}
+
+\begin{document}
+\maketitle
+This document holds problems that fit into the Bin 1 according to the prelim syllabus. 
+
+\tableofcontents
+
+\section{Prelim Problems}
+The problems are listed in most recent first. IE the first question is from August 2023, second is from January 2023, etc. In addition, the proofs provided are my own to complement the ones posted by the committees of previous years.
+\begin{questions}
+    \question Let $T$ be a linear map $T:U\rightarrow V$ and $S$ be a linear map $S:V\rightarrow W$.\\
+    Prove that $\dim U-\dim V \leq \dim\null ST - \dim\null S$.
+    \question Suppose $U,W$ are subspaces of a finite-dimensional vector space $V.$
+    \begin{parts}
+        \part Show that $\dim \left(U\cap W\right) = \dim U + \dim W - \dim\left(U + W\right)$
+        \part Let $n=\dim V$. Show that if $k<n$, then an intersection of $k$ subspaces of dimension $n-1$ always has dimension at least $n-k$.
+    \end{parts}
+    \question Prelim Aug 22 Part 1.
+    \begin{parts}
+        \part Let $v_1,v_2,v_3$ be linearly dependent, and $v_2,v_3,v_4$ are linearly independent
+        \begin{subparts}
+            \subpart Show that $v_1$ is a linear combination of $v_2$ and $v_3$.
+            \subpart Show that $v_4$ is not a linear combination of $v_1,v_2,$ and $v_3$.
+        \end{subparts}
+        \iffalse % This is not really a good question for study purposes. Nothing really to gain from this other than practicing showing something is a basis, and there are more straightforward examples for that. But I am leaving this in the source file in case someone would like to see it.
+        \part Find $10$ vectors in $\R^3$ so that any three of them for a basis. Justify your answer.
+        \fi
+    \end{parts}
+    \question Let $V$ be a vector space of dimension $n$ over a field $F$. Let $v_1,v_2,\dots,v_n$ be a basis of $V$ and $T$ be an operator on $V$. \\
+    Prove: $T$ is invertible if and only if $Tv_1,Tv_2,\dots,Tv_n$ are linearly independent.
+\end{questions}
+
+\section{Axler Problems}
+
+\section{Other Problems}
+\end{document}

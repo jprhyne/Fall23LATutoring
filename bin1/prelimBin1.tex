@@ -40,9 +40,63 @@ The problems are listed in most recent first. IE the first question is from Augu
 
         Since we want to have $\dim\nullS ST$ and $\dim\nullS S$ present, we should try to use theorem \ref{thm:RN} in a way that would give us these operators on the right side.
 
-        See that because $T$ maps from $U$ to $V$ and $S$ maps from $V$ to $W$
-        
-        \underline{\textbf{Proof written up properly for the prelim}}\\
+        See that because $T$ maps from $U$ to $V$ and $S$ maps from $V$ to $W$, then $ST$ maps from $U$ to $W$. This means by using theorem \ref{thm:RN}, we get
+        \[
+            \dim U = \dim\nullS ST + \dim\range ST
+        \]
+        Next, we can use theorem \ref{thm:RN} to get that
+        \[
+            \dim V = \dim\nullS S + \dim\range S
+        \]
+        By subtracting these two equations, we have
+        \[
+            \dim U - \dim V = \dim\nullS ST + \dim\range ST - \left(\dim\nullS S + \dim\range S\right)
+        \]
+        So if we group together our range and nullspace dimensions we are close to what we need
+        \[
+            \dim U - \dim V = \dim\nullS ST - \dim\nullS S + \left(\dim\range ST - \dim\range S\right)
+        \]
+        So, we are really close to what we want. All that is left is just try try to get rid of our range dimensions through some kind of algebra. Since we are wanting a $\leq$ in our final statement, if  we can argue that 
+        $ \left(\dim\range ST - \dim\range S\right) \leq 0 $ then we would be done.
+
+        So, we are essentially trying to argue $\dim\range ST \leq \dim\range S$. 
+
+        Before talking about how we would approach this, recall that $\range ST$ is the set of all
+        vectors in $W$ that $S(T(u))$ can produce for any $u\in U$, while $\range S$ is the set of all
+        vectors in $W$ that $S(v)$ can produce for any $v\in V$. 
+
+        We also know from theorem 3.19 from Axler that $\range T$ is a subspace of $V$. This means that if we look 
+        at $\range ST$ we are looking at what $S$ can map to from $\range T$. So this means we are mapping
+        a potentially smaller (but never larger) set inside $V$ to $W$ meaning that $\range ST \leq \range S$
+
+        So we can conclude that
+        \begin{align*}
+            \dim U - \dim V &= \dim\nullS ST - \dim\nullS S + \left(\dim\range ST - \dim\range S\right) \\
+            &\leq \dim\nullS ST - \dim\nullS S + \left(\dim\range S - \dim\range S\right) \\
+            &= \dim\nullS ST - \dim\nullS S
+        \end{align*}
+        as desired.
+        \\\underline{\textbf{Proof written up properly for the prelim}}\\
+        From the definition of $S$ and $T$ in the problem description, we know that $ST:U\rightarrow W$. From the rank-nullity theorem, we know the following
+        \begin{align*}
+            \dim U &= \dim\nullS ST + \dim\range ST \\
+            \dim V &= \dim\nullS S + \dim\range S
+        \end{align*}
+        We also know from Axler that $\range T$ is a subspace of $V$ thus $\range ST$ is a subspace of $\range S$
+        because we are mapping a subset of $V$ to $W$ with $ST$. This allows us to say that
+        \[
+            \dim\range ST \leq \dim\range S
+        \]
+
+        Combining all of the above results we have
+        \begin{align*}
+            \dim U - \dim V &= \dim\nullS ST + \dim\range ST - \left(\dim\nullS S + \dim\range S\right) \\
+            &= \dim\nullS ST - \dim\nullS S + \left(\dim\range ST - \dim\range S\right) \\
+            &\leq \dim\nullS ST - \dim\nullS S + \left(\dim\range S - \dim\range S\right) \\
+            &= \dim\nullS ST - \dim\nullS S
+        \end{align*}
+
+        which is our desired result
     \end{solution}
     \question Suppose $U,W$ are subspaces of a finite-dimensional vector space $V$.
     \begin{parts}
@@ -65,6 +119,25 @@ The problems are listed in most recent first. IE the first question is from Augu
 \end{questions}
 
 \section{Axler Problems}
+\begin{questions}
+    \question Suppose
+    \[  
+        U = \left\{\left(x,y,x+y,x-y,2x\right)\in\F^5:x,y\in\F\right\}.
+    \]
+    Find a subspace $W$ of $\F^5$ such that $\F^5 = U\oplus W.$
+
+    \question Suppose
+    \[  
+        U = \left\{\left(x,y,x+y,x-y,2x\right)\in\F^5:x,y\in\F\right\}.
+    \]
+    Find three subspaces $W_1,W_2,W_3$ of $\F^5$ such that $\F^5 = U\oplus W_1\oplus W_2\oplus W_3.$
+
+    \question Prove or give a counter example: If $U_1,U_2,W$ are subspaces of $V$ such that
+    \[
+        V = U_1\oplus W \text{ and } V = U_2\oplus W
+    \]
+    Then $U_1 = U_2$.
+\end{questions}
 
 \section{Other Problems}
 \end{document}

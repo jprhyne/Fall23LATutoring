@@ -5,6 +5,8 @@
     * basis
     * rank
     * finite-dimensional and infinite dimensional (lists and polynomials)
+    * sum
+    * direct sum
 * Linear Transformations Axler 3 and 10
     * matrix representation
     * change of basis

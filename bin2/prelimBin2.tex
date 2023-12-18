@@ -1,0 +1,31 @@
+% Hacky way of allowing us to compile this with and without answers using the makefile in this folder
+\ifdefined\isanswers
+    \documentclass[answers]{exam}
+\else
+    \documentclass{exam}
+\fi
+% Use mystyle file. This is a congolmeration of things I've used over the years. Most is stolen from either previous professors or stack overflow. It may or may not be cited. Assume I didn't come up with any of it myself.
+\usepackage{mystyle}
+\renewcommand{\L}[1]{\mathcal{L}\left(#1\right)}
+
+\title{Bin 2 Problems}
+\date{\today}
+\author{}
+
+\begin{document}
+\maketitle
+This document holds problems that fit into the Bin 2 according to the prelim syllabus. Or are approached 
+in a way most compatible with Bin 2
+
+\tableofcontents
+
+\section{Prelim Problems}
+\begin{questions}
+\end{questions}
+
+\section{Axler Problems}
+\begin{questions}
+\end{questions}
+
+\section{Other Problems}
+\end{document}

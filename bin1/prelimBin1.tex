@@ -204,6 +204,67 @@ The problems are listed in most recent first. IE the first question is from Augu
     \end{parts}
     \question Let $V$ be a vector space of dimension $n$ over a field $F$. Let $v_1,v_2,\dots,v_n$ be a basis of $V$ and $T$ be an operator on $V$. \\
     Prove: $T$ is invertible if and only if $Tv_1,Tv_2,\dots,Tv_n$ are linearly independent.
+    \begin{solution}\,\\
+        \underline{\textbf{Intuition build-up}}\\
+        Since we have an iff statement we are trying to prove, picking the direction that seems the most direct
+        would be a great place to start. Other than that, there aren't many tricks that we can do or take advantage of.
+
+        Note that since $v_1,\dots,v_n$ is a basis of $V$, $V$ is a finite dimensional vector space of size $n$.
+        So we need only show injectivity or surjectivity of $T$ to show $T^{-1}$ exists due to Axler $3.69$. 
+        However the provided solution
+        shows both methods. So we will do the same here as the proof will extend to a infinite dimensional.
+
+        \underline{\textbf{Solution}}\\
+        We first show the $\implies$ direction. We do this via contradiction. 
+        Assume that $Tv_1,Tv_2,\dots,Tv_n$ are linearly dependent. IE, $\exists a_1,\dots,a_n\in\F$ such that 
+        \[
+            a_1Tv_1 + \dots + a_nTv_n = \vec{0}.
+        \]
+        Since $T$ is invertible, $T^{-1}$ exists. We now apply this operator to both sides of our above equation 
+        and see that
+        \begin{align*}
+            T^{-1}\left(a_1Tv_1 + \dots + a_nTv_n\right) &= T^{-1}\vec{0} \\
+            a_1T^{-1}Tv_1 + \dots + a_nT^{-1}Tv_n &= \vec{0} \\
+            a_1v_1 + \dots + a_nv_n &= \vec{0}
+        \end{align*}
+        However, since $v_1,\dots,v_n$ form a basis of $V$, we have that $a_1=\dots =a_n=0$. Thus, we have that
+        $Tv_1,\dots,Tv_n$ are linearly independent as desired.
+
+        Next, we prove the $\impliedby$ direction. So, we are assuming that $Tv_1,\dots,Tv_n$ are linearly
+        independent and we will show that $T^{-1}$ exists by showing $T$ is injective and surjective.
+
+        First, we show injectivity. Suppose $u_1,u_2\in V$ such that $Tu_1 = Tu_2$. Since we know that
+        $v_1,\dots,v_n$ form a basis of $V$, there exists $a_1,\dots,a_n\in\F$ and $b_1,\dots,b_n\in\F$ such that 
+        \begin{align*}
+            u_1 &= \sum_{k=1}^na_kv_k\\
+            u_2 &= \sum_{k=1}^nb_kv_k
+        \end{align*}
+        We also see that
+        \begin{align*}
+            Tu_1 = Tu_2 &\implies T\left(\sum_{k=1}^n a_kv_k\right) = T\left(\sum_{k=1}^n b_kv_k\right) \\
+            &\implies \sum_{k=1}^n a_kTv_k = \sum_{k=1}^n b_kTv_k
+            &\implies \sum_{k=1}^n\left(a_k-b_k\right)Tv_k = \vec{0}.
+        \end{align*}
+
+        However, since $Tv_1,\dots,Tv_n$ are linearly independent, we know that for $k=1,\dots,n$, $a_k-b_k=0$
+        meaning our coefficients must be equal. Thus, we have that $u_1=u_2$, so T is injective.
+
+        Next, we show surjectivity.
+        Since we know that $Tv_1,\dots,Tv_n$ is a linearly independent list of the correct size, this list
+        forms a basis of $V$. Thus for all $v\in V$, we have that there exists, $c_1,\dots,c_n\in\F$ such that
+        \[
+            v = \sum_{k=1}^n c_kTv_k
+        \]
+        However, we also see that
+        \begin{align*}
+            v &= \sum_{k=1}^n c_kTv_k \\
+            &= T\left(\sum_{k=1}^nc_kv_k\right)
+        \end{align*}
+        See that if we define $u = \sum_{k=1}^nc_kv_k$, then we have that for all $v\in V$, there exists some
+        $u\in V$ such that $v=Tu$. So, we have that $T$ is surjective.
+
+        Since $T$ is both injective and surjective, we know that $T$ is invertible as desired.
+    \end{solution}
 \end{questions}
 
 \section{Axler Problems}

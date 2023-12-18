@@ -1,14 +1,14 @@
 include make.inc
-default: prelimBin2Answers.pdf prelimBin2.pdf
+default: prelimBin3Answers.pdf prelimBin3.pdf
 
-prelimBin2.pdf: prelimBin2.tex
-	$(LC) prelimBin2.tex
-	$(LC) prelimBin2.tex
+prelimBin3.pdf: prelimBin3.tex
+	$(LC) prelimBin3.tex
+	$(LC) prelimBin3.tex
 
-prelimBin2Answers.pdf: prelimBin2.tex
-	$(LC) "\def\isanswers{1} \input{prelimBin2.tex}"
-	$(LC) "\def\isanswers{1} \input{prelimBin2.tex}"
-	mv prelimBin2.pdf prelimBin2Answers.pdf
+prelimBin3Answers.pdf: prelimBin3.tex
+	$(LC) "\def\isanswers{1} \input{prelimBin3.tex}"
+	$(LC) "\def\isanswers{1} \input{prelimBin3.tex}"
+	mv prelimBin3.pdf prelimBin3Answers.pdf
 
 clean: 
-	rm prelimBin2Answers.pdf prelimBin2.pdf
+	rm prelimBin3Answers.pdf prelimBin3.pdf

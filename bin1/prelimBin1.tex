@@ -7,6 +7,8 @@
 % Use mystyle file. This is a congolmeration of things I've used over the years. Most is stolen from either previous professors or stack overflow. It may or may not be cited. Assume I didn't come up with any of it myself.
 \usepackage{mystyle}
 
+\newcommand{\spanV}[1]{\text{span}\left(#1\right)}
+
 \title{Bin 1 Problems}
 \date{\today}
 \author{}
@@ -76,7 +78,7 @@ The problems are listed in most recent first. IE the first question is from Augu
             &= \dim\nullS ST - \dim\nullS S
         \end{align*}
         as desired.
-        \\\underline{\textbf{Proof written up properly for the prelim}}\\
+        \\\underline{\textbf{Proof written up more properly for the prelim}}\\
         From the definition of $S$ and $T$ in the problem description, we know that $ST:U\rightarrow W$. From the rank-nullity theorem, we know the following
         \begin{align*}
             \dim U &= \dim\nullS ST + \dim\range ST \\
@@ -96,19 +98,105 @@ The problems are listed in most recent first. IE the first question is from Augu
             &= \dim\nullS ST - \dim\nullS S
         \end{align*}
 
-        which is our desired result
+        which is our desired result.
     \end{solution}
     \question Suppose $U,W$ are subspaces of a finite-dimensional vector space $V$.
     \begin{parts}
         \part Show that $\dim \left(U\cap W\right) = \dim U + \dim W - \dim\left(U + W\right)$
+        \begin{solution}
+            See the 
+            \href{https://clas.ucdenver.edu/mathematical-and-statistical-sciences/sites/default/files/attached-files/linalg-2023jan13_withsol.pdf}{\color{blue}{solution}} 
+            provided by the January 2023 committee. This is a good proof that goes through the
+            steps very well. For intuition, we are talking about dimensions of finite dimensional spaces, so
+            trying to something with basis length will be a good start in general.
+        \end{solution}
         \part Let $n=\dim V$. Show that if $k<n$, then an intersection of $k$ subspaces of dimension $n-1$ always has dimension at least $n-k$.
+        \begin{solution}
+            See the linked solution as well for this part. As far as intuition is concerned, we are asking about a
+            property of an intersection of an arbitrary number of sets so induction is always a good place to 
+            start. As far as the method is concerned, this problem statement seems to lead to setting up using
+            the first part, so that is usually a good place to start.
+        \end{solution}
     \end{parts}
     \question Prelim Aug 22 Part 1.
     \begin{parts}
         \part Let $v_1,v_2,v_3$ be linearly dependent, and $v_2,v_3,v_4$ are linearly independent
         \begin{subparts}
             \subpart Show that $v_1$ is a linear combination of $v_2$ and $v_3$.
+            \begin{solution}\,\\
+                \underline{\textbf{Intuition build-up}}\\
+                Since we know that $v_2,v_3, v_4$ are linearly independent, we can use 
+                this fact as if $v_1$ was not a linear combination of $v_2$ and $v_3$ 
+                then either $v_2$ or $v_3$ are a scalar multiple of each other which would make the second
+                given statement untrue.
+
+                \underline{\textbf{Solution}}\\
+                Since we know that $v_1$, $v_2$, and $v_3$ are linearly dependent, we know that there exist 
+                some $a_1,a_2,a_3\in\F$ such that
+                \begin{equation}\label{eq:v1}
+                    a_1v_1 + a_2v_2 + a_3v_3 = 0
+                \end{equation}
+                where not all are $0$. 
+
+                We will prove the desired statement through contradiction, so assume that $v_1$ is not a linear 
+                combination of $v_2$ and $v_3$, then this means that in equation \eqref{eq:v1}, know that 
+                $a_1 = 0$. This is because if $a_1\neq0$ we have
+                \[
+                    v_1 = \frac{1}{a_1}\left(a_2v_2 + a_3v_3\right)
+                \]
+                which violates our assumption on $v_1$.
+
+                Therefore, we have that $v_2$ is a scalar multiple of $v_3$, so there exists some $c\in\F$ such 
+                that $v_2 = cv_3$. Now, we will show there exists some $b_2,b_3,b_4\in\F$ such that
+                \[
+                    b_2v_2 + b_3v_3 + b_4v_4 = 0
+                \]
+                and not all are $0$. Let $b_4 = 0$, $b_3 = 1$ and $b_2 = \frac{-1}{c}$ where $c$ is the aforementioned constant.
+                See:
+                \begin{align*}
+                    b_2v_2 + b_3v_3 + b_4v_4 &= \frac{-1}{c}v_2 + v_3 \\
+                    &= -v_3 + v_3 \\
+                    &= 0
+                \end{align*}
+                Thus, $v_2$, $v_3$, and $v_4$ are linearly dependent, which contradicts the assumption that they
+                are linearly independent. So, we have that $v_1$ must be a linear combination of $v_2$ and $v_3$.
+            \end{solution}
             \subpart Show that $v_4$ is not a linear combination of $v_1,v_2,$ and $v_3$.
+            \begin{solution}\,\\
+                \underline{\textbf{Intuition build-up}}\\
+                Since we have from the previous part that $v_1$ is a linear combination of $v_2$ and $v_3$, and if
+                we also had that $v_4$ is a linear combination of $v_1$, $v_2$, and $v_3$ then we could show that
+                $v_4$ is a linear combination of both $v_2$ and $v_3$ which would again contradict the fact that
+                $v_2$, $v_3$, and $v_4$ are linearly independent.
+
+                \underline{\textbf{Solution}}\\
+                We will prove this statement through contradiction. Assume the given problem statement and that 
+                $v_4$ is a linear combination of $v_1$, $v_2$, and $v_3$.
+
+                Since $v_4$ is a linear combination of $v_1$, $v_2$, and $v_3$, we there exist $a_1$, $a_2$, and $a_3\in\F$ such that
+                \begin{equation}\label{eq:v4linCom}
+                    v_4 = a_1v_1 + a_2v_2 + a_3v_3
+                \end{equation}
+
+                From the previous part, we know that $v_1$ is a linear combination of $v_2$ and $v_3$, so there exist some
+                $b_2$, and $b_3\in\F$ such that
+                \begin{equation}\label{eq:v1linCom2}
+                    v_1 = b_2v_2 + b_3v_3
+                \end{equation}
+
+                Combining equations \eqref{eq:v4linCom} and \eqref{eq:v1linCom2} we get that
+                \begin{align*}
+                    v_4 &= a_1v_1 + a_2v_2 + a_3v_3 \\
+                    &= a_1\left(b_2v_2 + b_3v_3\right) + a_2v_2 + a_3v_3 \\
+                    &= \left(a_1b_2 + a_2\right)v_2 + \left(a_1b_3 + a_3\right)v_3
+                \end{align*}
+
+                Thus, $v_4$ is a linear combination of $v_2$ and $v_3$. Following a similar argument as the last
+                part, we have that $v_2$, $v_3$, and $v_4$ are linearly dependent contradicting the problem
+                statement. 
+
+                Thus, we have shown that $v_4$ is not a linear combination of $v_1,v_2,$ and $v_3$ as desired.
+            \end{solution}
         \end{subparts}
         \iffalse % This is not really a good question for study purposes. Nothing really to gain from this other than practicing showing something is a basis, and there are more straightforward examples for that. But I am leaving this in the source file in case someone would like to see it.
         \part Find $10$ vectors in $\R^3$ so that any three of them for a basis. Justify your answer.
@@ -125,18 +213,146 @@ The problems are listed in most recent first. IE the first question is from Augu
         U = \left\{\left(x,y,x+y,x-y,2x\right)\in\F^5:x,y\in\F\right\}.
     \]
     Find a subspace $W$ of $\F^5$ such that $\F^5 = U\oplus W.$
+    \begin{solution}
+        This problem is exactly like the next one, but I included both in  case there was another way to approach
+        this problem than what I expected. See the proof of the next problem for the approach and set 
+        $W = W_1\oplus W_2\oplus W_3$.
+    \end{solution}
 
     \question Suppose
     \[  
         U = \left\{\left(x,y,x+y,x-y,2x\right)\in\F^5:x,y\in\F\right\}.
     \]
     Find three subspaces $W_1,W_2,W_3$ of $\F^5$ such that $\F^5 = U\oplus W_1\oplus W_2\oplus W_3.$
+    \begin{solution}\,\\
+        \underline{\textbf{Intuition build-up}}\\
+        Remember the definition of a direct sum, so we need to propose $3$ subspaces $W_1,W_2,W_3$, such that the only way to get 
+        \[
+            u + w_1 + w_2 + w_3 = \vec{0}
+        \]
+        for $u\in U$, and $w_j\in W_j$ respectively is to have all of them be 0. (This is really just grabbing 
+        $3$ vectors that are linearly independent from the basis vectors of $U$).
+
+        Based on the structure of our problem, we just plug in $1$ for $x$ and $0$ for $y$ to get the first
+        vector then get vice versa for the second vector.
+
+        This means that our basis vectors are given by
+        $$A = \begin{bmatrix}
+            1 & 0\\
+            0 & 1\\
+            1 & 1\\
+            1 & -1\\
+            2 & 0
+        \end{bmatrix}.$$
+        Visually inspecting this matrix lets us see that the vectors
+        $$
+            \begin{bmatrix}1 \\ 0\\ 0\\ 0\\ 0\end{bmatrix}, \begin{bmatrix}0\\1\\0\\0\\0\end{bmatrix}, \text{ and }\begin{bmatrix}0\\0\\1\\0\\0\end{bmatrix}
+        $$
+        are linearly independent of each other and of the columns of $A$.
+        Thus we would define $W_1=\spanV{e_1}$, $W_2=\spanV{e_2}$, and $W_3=\spanV{e_3}$
+
+        Then we would be done.\\
+        \underline{\textbf{Solution}}\\
+        We need to construct $3$ subspaces of $\F^5$ that will direct sum with $U$ and each other. Define
+        \[
+            W_1 = \spanV{\begin{bmatrix}1 \\ 0\\ 0\\ 0\\ 0\end{bmatrix}}, W_2=\spanV{\begin{bmatrix}0\\1\\0\\0\\0\end{bmatrix}}, \text{ and }W_3=\spanV{\begin{bmatrix}0\\0\\1\\0\\0\end{bmatrix}}
+        \]
+        See that these are the spans of the first 3 standard basis vectors ie for $k=1,2,3$ we have
+        $W_k=\spanV{e_k}$.
+
+        Let $u\in U$, and for $k=1,2,3$, $w_k\in W_k$ such that
+        \begin{equation}\label{eq:linSys}
+            u + w_1 + w_2 + w_3 = \vec{0}.
+        \end{equation}
+
+        We know that $u$ is of the form
+        \[
+            u = \begin{bmatrix}x\\y\\x+y\\x-y\\2x\end{bmatrix}
+        \]
+        and for each $k$, $w_k$ is of the form
+        \[
+            w_k = a_ke_k
+        \]
+        This means that we can rewrite equation \eqref{eq:linSys} as
+        \begin{align}
+            x+a_1 &= 0\label{eq:1}\\
+            y+a_2 &= 0\label{eq:2}\\
+            x+y+a_3 &= 0\label{eq:3}\\
+            x-y &= 0\label{eq:4}\\
+            2x &= 0\label{eq:5}
+        \end{align}
+
+        Equation \eqref{eq:5} gives us that $x=0$. Plugging this into equations \eqref{eq:1} and \eqref{eq:4} gives us that
+        $a_1 = 0$ and $y = 0$ respectively. Finally we plug our knowns into equations \eqref{eq:2} and \eqref{eq:3}
+        to get that $a_2 = 0$ and $a_3 = 0$ respectively. 
+
+        This means that $u=w_1=w_2=w_3=\vec{0}$. Thus, the sum of these subspaces would be a direct sum. 
+        Now, we need only show that that $\F^5 = U\oplus W_1\oplus W_2\oplus W_3$.
+
+        In order to do this, we need only show that the direct sum has a basis of length $5$ and we are done because all the basis vectors would live inside $\F^5$.
+
+        In order to do this, we will first look at $U$ and its basis vectors. From the construction of $U$, if we 
+        set $x=1$ and $y=0$ then $x=0$ and $y=1$, we get $2$ vectors out that look like
+        \[
+            \begin{bmatrix}1\\0\\1\\1\\2\end{bmatrix},\begin{bmatrix}0\\1\\1\\-2\\0\end{bmatrix}
+        \]
+        By setting up the equations we would need to solve to prove these are linearly independent, we would get
+        the same system of equations as listed above, so we have:
+        \[
+            \F^5 = U\oplus W_1\oplus W_2\oplus W_3
+        \]
+        as desired.
+    \end{solution}
 
     \question Prove or give a counter example: If $U_1,U_2,W$ are subspaces of $V$ such that
     \[
         V = U_1\oplus W \text{ and } V = U_2\oplus W
     \]
     Then $U_1 = U_2$.
+
+    \begin{solution}\,\\
+        \underline{\textbf{Intuition build-up}}\\
+        This one turns out to not be true, but where we would get this idea from (if it's not directly obvious to you) would be trial and error
+        of trying to prove it to be true and trying to leverage any issues present. So, we would want to construct
+        a counter example where $W$ is of dimension $\dim{V} -1$ and $\dim{U_1} = \dim{U_2}$ but $U_1\neq U_2$.
+        This is because we can construct two linearly independent vectors that are not equal but would increase the dimension. 
+        Since we are providing a counter example, we can do this in a way that makes our lives as easy as possible
+        so let's stick with $V=\R^3$, and make $W$ be simple.
+
+        Consider the spaces given as below
+        \begin{align*}
+            W &= \left\{(x,y,0)\in\R^3 : x,y\in\R\right\}\\
+            U_1 &= \left\{(x,0,x)\in\R^3 : x\in\R\right\}\\
+            U_2 &= \left\{(0,x,x)\in\R^3 : x\in\R\right\}
+        \end{align*}
+
+        See that the basis vectors of $W$ are $e_1$ and $e_2$, while the basis vector of $U_1$ is $\begin{bmatrix}1&0&1\end{bmatrix}^\top$ while the basis vector for $U_2$ is $\begin{bmatrix}0&1&1\end{bmatrix}^\top$, so these spaces are not equal but each provide unique information in the third element, so they will direct sum with $W$, and then our new basis will be of size $3$ so we would have a basis of $\R^3$ so we'd be done.
+
+            When it comes to showing that we have direct sums, we will do so using theorem 1.45 from Axler, which
+            is given below
+            \begin{theorem}\label{thm:Axler145} 1.45 Axler\\
+                Suppose $U,W$ are subspaces of some vector space $V$. Then $U$ and $W$ form a direct sum if and 
+                only if $U\cap W = \{\vec{0}\}$.
+            \end{theorem}
+        
+        \underline{\textbf{Solution}}\\
+        Consider the vector space $V=\R^3$, and the following subspaces of $V$
+        \begin{align*}
+            W &= \left\{(x,y,0)\in\R^3 : x,y\in\R\right\}\\
+            U_1 &= \left\{(x,0,x)\in\R^3 : x\in\R\right\}\\
+            U_2 &= \left\{(0,x,x)\in\R^3 : x\in\R\right\}
+        \end{align*}
+        We will first show that $U_1\oplus W = V = U_2\oplus W$. We first show that the provided sums
+        are direct sums using theorem \ref{thm:Axler145}.
+
+        First consider $U=U_1\cap W$. Let $u\in U$, this means we can write $u$ as both
+        \begin{align*}
+            u &= \begin{bmatrix} x&y&0\end{bmatrix}^\top \\
+            u &= \begin{bmatrix} z&0&z\end{bmatrix}^\top
+        \end{align*}
+        So each of these vectors must be equal. The last term means that $z = 0$, so $u$ must be $\vec{0}$.
+        Thus $U_1\cap W = \vec{0}$ meaning that we have a direct sum.
+    \end{solution}
 \end{questions}
 
 \section{Other Problems}

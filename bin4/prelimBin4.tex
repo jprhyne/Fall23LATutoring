@@ -8,7 +8,7 @@
 \usepackage{mystyle}
 \renewcommand{\L}[1]{\mathcal{L}\left(#1\right)}
 
-\title{Bin 1 Problems}
+\title{Bin 4 Problems}
 \date{\today}
 \author{}
 
@@ -25,25 +25,434 @@ in a way most compatible with Bin 4
     $p(z) = 3 + 2z - z^2 + 5z^3 + z^4$
     \begin{parts}
         \part[5] Prove $T$ is invertible
-        \begin{solution}
-            asdf
+        \begin{solution}\,\\
+            \secName{Intuition Buildup}
+            We know that the roots of the minimal polynomial are exactly the eigenvalues of the associated linear 
+            operator, and that a matrix is invertible if and only if 0 is not an eigenvalue (it's nullspace is 
+            trivial). This is sufficient as it shows $T$ is an injective linear operator, which is enough as we 
+            assume that $V$ is a finite vector space (yes I know the course discusses infinite vector spaces
+            however that is a functional analysis type of approach not Linear Algebra in most cases. If you are 
+            unsure, always ask the proctor what $V$ is).
+
+            \secName{Solution}
+
+            We will prove that $T$ is invertible by showing that $0$ is not an eigenvalue of $T$. This will let 
+            us conclude that $\nullS \left(T - 0I\right) = \nullS T = \left\{\vec{0}\right\}$. This tells us that
+            $T$ is injective. Next, since $p(z)$ is our minimal polynomial, and the roots of $p$ are exactly 
+            the eigenvalues of $T$, we need only show that $0$ is not a root of $p$. See that
+            \begin{align*}
+                p(0) &= 3 + 2*0 - 0^2 + 5*0^3 + 0^4 \\
+                &= 3\\
+                &\neq 0.
+            \end{align*}
+            Thus, $0$ is not a root of $p$, so we conclude that $T$ is invertible as desired.
         \end{solution}
         \part[15] Find the minimal polynomial of $T$.
+
+        \begin{solution}\,\\
+            \secName{Intuition Buildup} For this part, we will be using $3$ things. The first being that 
+            $T^{-1}$ exists, the second that $p(T) = 0$ by definition of the minimal polynomial, and the third 
+            is theorem \ref{thm:Axler846}. The idea behind
+            approaching it this way is because we want to find a minimal monic polynomial $q$ such that
+            $q\left(T^{-1}\right) = 0$, and all the information we are given that can be useful for this is
+            the minimal polynomial of $T$.
+
+            We put a general outline below after the theorem statement\,\\
+
+            \begin{theorem}(Axler 8.46)\label{thm:Axler846}
+                Suppose $T\in\mathcal{L}\left(V\right)$, and $q\in\mathcal{P}\left(\F\right)$ if and only if
+                $q$ is a polynomial multiple of the minimal polynomial of $T$.
+            \end{theorem}\,\\
+
+            We see that $p(z)$ has degree $4$, and we want to try to get this polynomial in terms of $T^{-1}$. 
+            The easiest way to do this is to apply $T^{-4}$ to $p(T)$. This will give us:
+            \begin{align*}
+                p\left(T\right) = 0 &\iff T^{-4}p\left(T\right) = 0 \\
+                &\iff T^{-4}\left(3I + 2T - T^2 + 5T^3 + T^4\right) = 0 \\
+                &\iff 3T^{-4} + 2T^{-3} - T^{-2} + 5T^{-1} + I = 0 \\
+                &\iff T^{-4} + \frac{2}{3}T^{-3} - \frac{1}{3}T^{-2} + \frac{5}{3}T^{-1} + \frac{1}{3}I = 0
+            \end{align*}
+            So, now we would define $q(z) = z^4 + \frac{2z^3}{3} - \frac{z^2}{3} + \frac{5z}{3} + \frac{1}{3}$
+            
+            which we have shown is a polynomial multiple of the minimal polynomial due to theorem 
+            \ref{thm:Axler846}. 
+            All that is left at this point is to argue that $q$ is of minimal degree.
+
+            The easiest way to do this is to consider a polynomial of degree $3$ or less, call it $q_1$ and then
+            show it would mean $T$ has a polynomial of degree $3$ or less, $p_1$, such that $p_1(T) = 0$ which
+            contradicts the assumption that $p$ is the minimal polynomial of $T$.
+
+            Assume that there exists some $q_1\in\mathcal{P}(\F)$ such that $q_1\left(T^{-1}\right) = 0$ and $q_1$
+            has degree $k\leq 3$. This means that $q_1$ is of the form
+            \[
+                q_1(z) = a_0 + \dots + a_{k-1}z^{k-1} + z^k
+            \]
+
+            \secName{Note} We don't need to have $a_k=1$, but we write it in this way to draw attention to the 
+            fact that
+            we are picking a minimal polynomial of smaller degree, however the argument follows the same
+            without this restriction.
+
+            where $a_0 \neq 0$ as otherwise $T^{-1}$ would not be invertible, which contradicts the definition
+            of $T^{-1}$.
+            See that we have:
+            \begin{align*}
+                q_1\left(T^{-1}\right) = 0 &\iff T^kq_1\left(T^{-1}\right) = 0 \\
+                &\iff T^k\left(a_0 + \dots + a_{k-1}T^{-(k-1)} + T^{-k}\right) = 0 \\
+                &\iff a_0T^k + \dots + a_{k-1}T + I = 0 \\
+                &\iff T^k + \dots + \frac{a_{k-1}}{a_0}T + \frac{1}{a_0}I = 0
+            \end{align*}
+            Which means the polynomial $p_1(z) = z^k + \dots + \frac{a_{k-1}z}{a_0} + \frac{1}{a_0}$ is a 
+            polynomial multiple of $p(z)$ by theorem \ref{thm:Axler846}, however this is impossible  because 
+            $p_1$ is of smaller degree than $p$. So, this means that $q_1$ cannot have degree smaller than 4.
+
+            Thus, we have shown that $q$ is the minimal polynomial of $T^{-1}$ as it is a monic polynomial of 
+            minimal degree such that $q\left(T^{-1}\right) = 0$.
+
+            \secName{Solution}
+
+            Since we know that the minimal polynomial of $T$ is $p$, consider the polynomial given by
+            \begin{equation}\label{eq:minPoly}
+                q(z) = z^4 + \frac{2z^3}{3} - \frac{z^2}{3} + \frac{5z}{3} + \frac{1}{3}
+            \end{equation}
+            See that:
+            \begin{align}
+                3q\left(T^{-1}\right) &= 3\left(T^{-4} + \frac{2}{3}T^{-3} - \frac{1}{3}T^{-2} + \frac{5}{3}T^{-1} + \frac{1}{3}I\right)\nonumber \\
+                &= 3T^{-4} + 2T^{-3} - T^{-2} + 5T^{-1} + I \nonumber\\
+                &= T^{-4}\left(3 + 2T - T^2 + 5T^3 + T^4\right) \label{eq:1} \\
+                &= T^{-4}p(T) \nonumber\\
+                &= 0.
+            \end{align}
+            Note that step \ref{eq:1} is valid because if $T^{-1}$ exists, we can ``factor'' out $T^{-4}$.
+
+            Since $q\left(T^{-1}\right)=0$ we know from theorem \ref{thm:Axler846} that $q$ is a polynomial 
+            multiple of the minimal polynomial of $T^{-1}$. Since it is already monic, we need only show
+            that it is of minimal degree. Assume that there exists some $q_1\in\mathcal{P}(\F)$ such that 
+            $q_1\left(T^{-1}\right) = 0$, $q_1 \neq 0$, and where $q_1$ is of the form 
+            \begin{equation*}
+                q_1(z) = \sum_{l=0}^{k} a_lz^l
+            \end{equation*}
+            See that:
+            \begin{align*}
+                q_1\left(T^{-1}\right) =0 &\implies T^kq_1\left(T^{-1}\right) = 0 \\
+                &\implies T^k\sum_{l=0}^{k} a_lT^{-l} = 0 \\
+                &\implies \sum_{l=0}^k a_lT^{k-l} = 0 \\
+                &\implies a_0T^k + \dots a_kI = 0
+            \end{align*}
+            This means the polynomial $p_1(z) = a_0z^k + \dots + a_k$ is a polynomial such that 
+            $p_1(T) = 0$. This means that by theorem \ref{thm:Axler846} we have that $p_1$ is a polynomial 
+            multiple of $p$ as $p$ is the minimal polynomial of $T$. However since $p_1$ has smaller
+            degree than $p$, which would mean that the minimal polynomial of $T$ would have degree $k$ or lower.
+            But, this contradicts the fact that $p$ is the minimal polynomial of $T$. Thus, we have that $q$ is 
+            of minimal degree therefor, $q$ as given by equation \ref{eq:minPoly} is the minimal polynomial of 
+            $T^{-1}$ as desired.
+        \end{solution}
     \end{parts}
     \question Answer the following
     \begin{parts}
         \part Is there an $n\times n$ matrix $A$ with $A^{n-1}\neq 0$ and $A^n = 0$? Give an example to show such a matrix exists (and explain why it satisfies both conditions), or disprove it.
+        \begin{solution}\,\\
+            \secName{Relevant Theorems}
+            \begin{theorem} Axler 8.11\label{thm:Axler811}\\
+                Suppose $T\in\mathcal{L}(V)$ and $\lambda\in\F$. Then $G(\lambda,T) = 
+                \nullS\left(T - \lambda I\right)^{\text{dim}V}$ (The generalized eigenspace associated
+                with $lambda$).
+            \end{theorem}
+            \begin{theorem}Axler 8.18 \label{thm:Axler818}\\
+                Suppose $N\in\mathcal{L}(V)$ is nilpotent. Then $N^{\text{dim}V}=0$
+            \end{theorem}
+
+            \secName{Intuition Buildup} The phrasing of this problem is very similar to theorem \ref{thm:Axler811}, and
+            seems to be phrased in a way to show an example of an operator that we know exists based on this 
+            theorem as well. In addition, the kind of matrices to look at are going to be nilpotent as we are 
+            looking at a matrix raised to a power becoming $0$. In addition, we want to be able to talk about
+            powers of $A$, so we would want to try the Jordan Form.
+
+            \secName{Solution} Such a matrix exists. Consider the matrix $A$ such that for all $i,j$:
+            \[
+                A_{ij} = \begin{cases}
+                    0 & \text{ if } j = i + 1\\
+                    1 & \text{ otherwise} 
+                \end{cases}
+            \]
+            This matrix is nilpotent, and is already in Jordan Form. Since it is a single Jordan block of size $n$
+            associated with the eigenvalue $0$, it has minimal polynomial $p(z) = z^n$. This means that if we
+            plug in $A$, we have that $A^n = 0$ by definition. So we satisfy the second condition. Next we also
+            know that $A^{n-1}$ is not $0$. This is because if it was, then the minimal polynomial of $A$ would
+            have degree $n-1$ or less, which contradicts our construction of $A$. Thus $A$ satisfies both of our 
+            conditions as desired.
+        \end{solution}
         \part Show that an $n\times n$ upper triangular matrix with $A^n\neq 0$ and $A^{n+1} = 0$ does not exist.
+        \begin{solution}\,\\
+            \secName{Intuition Buildup} Since we don't start with a lot of information about the matrix, it's a
+            good idea to start with Contradiction. So if we assume such a matrix exists, we want to know things
+            about powers of $A$ an unknown matrix, so it's a good place to start with eigenvalues and
+            eigenvectors. Let's look at what we can say about an eigenpair of a matrix such that $A^{n+1} = 0$.
+            We know that we have eigenvalues and eigenvectors because $A$ is upper triangular. So if $(v,\lambda)$
+            is an eigenpair and $A^{n+1} = 0$. Then we have that 
+            \begin{align*}
+                A^{n+1} = 0 &\implies A^{n+1}v = 0 \\
+                &\implies \lambda^{n+1}v = 0 \\
+                &\implies \lambda = 0 \text{ or } v = 0.
+            \end{align*}
+            So we would have that either all eigenvalues are $0$ or each eigenvector is $0$. The latter is 
+            impossible as eigenvectors cannot be $0$. So we have an upper triangular matrix with only
+            $0's$ on the diagonal. This means that $A$ is nilpotent. From theorem \ref{thm:Axler818}, this means
+            that $A^n = 0$, however this contradicts our assumption that $A^n\neq 0$.
+
+            \secName{Solution}
+            We will demonstrate this by contradiction. Assume that such an upper triangular matrix exists.
+            Since $A$ is upper triangular, we know that $A$ has eigenvalues, and all the eigenvalues are on
+            the diagonal. Let $(\lambda,v)$ be an eigenvalue with associated eigenvector. See that
+            \[
+                Av=\lambda v \implies A^{n+1}v = \lambda^{n+1} v
+            \]
+            So, we have that by assumption of $A^{n+1} = 0$, that $\lambda^{n+1}v = 0$. This gives us that either
+            $\lambda^{n+1}=0$ or $v=0$. Since $v$ is an eigenvector, $v$ cannot be $0$. This leaves us with 
+            $\lambda^{n+1}=0$, which means $\lambda=0$. Since $(\lambda,v)$ was an arbitrary eigenpair, all the
+            eigenvalues of $A$ are $0$. Since $A$ is upper triangular, all it's eigenvalues are on the 
+            diagonal. Finally, we have that $A$ is a nilpotent matrix as it fits the form of Theorem 8.19 in 
+            Axler, and by theorem \ref{thm:Axler818} we know that $A^n=0$. However, this contradicts the fact
+            that $A^n\neq 0$. Thus, an upper triangular matrix with $A^n\neq 0$ and $A^{n+1}=0$ cannot exist.
+        \end{solution}
     \end{parts}
     \question Let $T$ be a linear map on a vector space $V$ and $\dim V=n$
     \begin{parts}
         \part If for some vector $v$, the vectors $v$, $Tv$, \dots, $T^{n-1}v$ are linearly independent, show that
         every eigenvalue of $T$ has only one corresponding eigenvector up to a scalar multiplication
+        \begin{solution}
+            \,\\
+            \secName{Intuition} For this part, it is a little more informative to take a more Matrix Algebra
+            approach. For starting, we are given a linearly independent list of length equal to the dimension
+            of our vector space, so we are given a basis. Next, we want to look at the matrix representation of
+            this operator with respect to this basis. Our matrix look like
+            \[
+                \begin{bmatrix}
+                           & v      & Tv& \dots & T^{n-2}v &T^{n-1} \\
+                    v      & 0      & 0      & \dots & 0      & a_{1,n} \\
+                    Tv     & 1      & 0      & \dots & 0      & a_{2,n} \\
+                    T^2v   & 0      & 1      & \dots & 0      & a_{3,n} \\
+                    \vdots & \vdots & \vdots & \dots & \vdots & \vdots \\
+                    T^{n-2}& 0      & 0      & \dots & 0      & a_{n-1,n}\\
+                    T^{n-1}& 0      & 0      & \dots & 1      & a_{n,n}
+                \end{bmatrix}
+            \]
+            We know the first $n-1$ columns of $A=\mathcal{M}(A,(v,Tv,\dots,T^{n-1}))$ based on how the basis 
+            vectors are defined. In addition,
+            we don't know what the final column looks like but we can make arguments about what this column
+            looks like once we talk about the eigenvalues and eigenvectors. Let $\lambda$ be an eigenvalue of 
+            $T$ (note: we don't necessarily know that $T$ has eigenvalues, but we need to only make arguments 
+            about any eigenvalues that may exist). Next we need to look at $\nullS\left(A - \lambda I\right)$
+            and then argue that we can only have one basis vector of this space.
+
+            Consider $A - \lambda I$
+            \[
+                A-\lambda I = \begin{bmatrix}
+                    -\lambda & 0       & \dots & 0       & a_{1,n}  \\
+                    1        & -\lambda& \dots & 0       & a_{2,n}  \\
+                    0        & 1       & \dots & 0       & a_{3,n}  \\
+                    \vdots   & \vdots  & \dots & \vdots  & \vdots   \\
+                    0        & 0       & \dots & -\lambda& a_{n-1,n}\\
+                    0        & 0       & \dots & 1       & a_{n,n}-\lambda
+                \end{bmatrix}
+            \]
+            If we look at the first $n-1$ columns these are linearly independent. We can see this visually
+            by thinking about how we would cancel out terms of the $k^\text{th}$ column using other ones.
+            Since each of these columns provides information in the $k^\text{th}$ and $k+1^\text{th}$ column 
+            in order to cancel out these terms we would need another vector that will introduce a new term in
+            either the $k-1^\text{th}$ or $k+2^\text{th}$ element. A statement like this should be mostly 
+            sufficient on a prelim to get at least most of the points. However below we will walk through 
+            how we would prove this statement anyway. Since the first $n-1$ are linearly independent, then
+            we know that since $\lambda$ is an eigenvalue, we have that 
+            $\dim\nullS\left(A-\lambda I\right)\geq 1$ and $\dim\range\left(A-\lambda I\right)\geq n-1$. So,
+            the fundamental theorem of linear maps, we have that 
+            $$n = \dim\nullS\left(A-\lambda I\right) + \dim\range\left(A-\lambda I\right)$$. Therefore, 
+            both of these dimensions must take their minimal values. As otherwise, the above equation would be
+            impossible to make true. Thus we have that
+            \[
+                \dim\nullS\left(A-\lambda I\right) = 1.
+            \]
+            So there can only be one eigenvector associated with this eigenvalue. Since $\lambda$ was an arbitrary
+            eigenvalue, this must hold for all eigenvalues of $A$. So, we have that there can only be one 
+            eigenvector (up to scalar multiplication) associated with each eigenvalue.
+
+            \secName{Solution}
+
+            Since the vectors $v,Tv,\dots T^{n-1}v$ are linearly independent, and we have $n$ of them, we have
+            a basis of $V$. Consider the matrix representation of $T$ with respect to this basis, we get that
+            \[
+                A = \mathcal{M}\left(T,(v,Tv,\dots,T^{n-1}v)\right) = 
+                \begin{bmatrix}
+                    0      & 0      & \dots & 0      & a_{1,n} \\
+                    1      & 0      & \dots & 0      & a_{2,n} \\
+                    0      & 1      & \dots & 0      & a_{3,n} \\
+                    \vdots & \vdots & \dots & \vdots & \vdots \\
+                    0      & 0      & \dots & 0      & a_{n-1,n}\\
+                    0      & 0      & \dots & 1      & a_{n,n}
+                \end{bmatrix}.
+            \]
+            Let $\lambda$ be an eigenvalue of $T$. This means that we have
+            $\dim\nullS\left(A-\lambda I\right) \geq 1$. Next, we will argue that this must be exactly $1$.
+            We do this by arguing that $\dim\range\left(A-\lambda I\right)\geq n-1$. So, consider the matrix
+            $A - \lambda I$.
+            \[
+                A-\lambda I = \begin{bmatrix}
+                    -\lambda & 0       & \dots & 0       & a_{1,n}  \\
+                    1        & -\lambda& \dots & 0       & a_{2,n}  \\
+                    0        & 1       & \dots & 0       & a_{3,n}  \\
+                    \vdots   & \vdots  & \dots & \vdots  & \vdots   \\
+                    0        & 0       & \dots & -\lambda& a_{n-1,n}\\
+                    0        & 0       & \dots & 1       & a_{n,n}-\lambda
+                \end{bmatrix}
+            \]
+            We will now argue that the first $n-1$ columns of this matrix are linearly independent.
+            Let $a_k$ be the $k^\text{th}$ column of $A-\lambda I$, and $c_1,\dots,c_{n-1}$ be coefficients
+            such that $\sim_{k=1}^{n-1}c_ka_k = 0$. This leaves us with the following system of equations
+            \begin{align*}
+                -\lambda c_1 &= 0 \\
+                c_1 -\lambda c_2 &= 0 \\
+                \vdots &\, \\
+                c_{n-2} - \lambda c_{n-1} \\
+                c_{n-1} &= 0.
+            \end{align*}
+            We can see that if perform backwards substitution that we start with $c_{n-1} =0$ and as we 
+            go up our system, we will get that each of these coefficients must be exactly $0$ (Note: we never use
+            the first equation, so we need not consider the case of $\lambda=0$.
+
+            Thus, we have that these columns are linearly independent, so this means that that 
+            $$\rank\left(A-\lambda I\right) = \text{number of linearly independent columns of } A \geq 
+            n-1$$. Since we have that the reank is at least $n-1$ and this is exactly the dimension of the 
+            range, we know from the Fundamental Theorem of Linear Maps that $\rank\left(A-\lambda I\right)=n-1$ as
+            if it were any larger we would get:
+            \[
+                n = \dim\range\left(A-\lambda I\right) + \dim\nullS\left(A-\lambda I\right) \geq n + 1
+            \]
+            which is impossible to do. Thus, we know that $\dim\nullS\left(A-\lambda I\right) = 1$. So we can
+            only have one eigenvector associated with $\lambda$ (up to scalar multiplication). Since $\lambda$
+            was an arbitrary eigenvalue of $T$, we know that this holds for all eigenvalues as desired.
+        \end{solution}
         \part If $T$ has $n$ distinct eigenvalues and vector $u$ is a sum of $n$ eigenvectors, corresponding
         to the distinct eigenvalues, show that $u$, $Tu$, \dots, $T^{n-1}u$ are linearly independent (and thus
         form a basis of $V$).
+        \begin{solution}
+            \,\\\secName{Intuition}
+            For this problem, we first want to write each of the given vectors in terms of the $n$ eigenvectors.
+            From Axler Theorem 5.10, these eigenvectors are linearly independent as they are associated with 
+            distinct eigenvectors (It's not worded in the most precise way, but the intent is that the
+            eigenvectors are associated with different eigenvalues. If you are unsure about what a problem
+            means ask the proctor, and they will more than likely answer. If they do not, just be clear about
+            what you are assuming for the problem at the start, and you shouldn't lose too many points). 
+
+            So, we look at what each of these vectors look like in terms of the eigenvectors
+            $u_1,\dots,u_n$. See that for $k=1,\dots,n$
+            \[
+                T^k(u) = \sum_{l=1}^n\lambda_l^ku_l
+            \]
+
+            Next, we need to show that these vectors are linearly independent. Assume that we have coefficients
+            $c_1,\dots,c_n$ such that 
+            \[
+                \sum_{k=1}^n c_kT^{k-1}u = 0
+            \]
+            Simplifying this equation, and grouping together based on the eigenvectors we get
+            \begin{align*}
+                0 &= \sum_{k=1}^n c_k\sum_{\ell=1}^n\lambda_\ell^{k-1}u_\ell\\
+                  &= c_1\sum_{\ell=1}^nu_\ell + c_2\sum_{\ell=1}^n\lambda_\ell u_\ell + \dots + c_n\sum_{\ell=1}^n\lambda_\ell^{n-1}u_\ell \\
+                  &= (c_1 + c_2\lambda_1 + \dots + c_n\lambda_1^{n-1})u_1 + \dots + (c_1 + c_2\lambda_n + \dots + c_n\lambda_n^{n-1})u_n
+            \end{align*}
+            Since we know that these eigenvectors are linearly independent (Axler 5.10) We know that each of 
+            these sums must be $0$. So we are left with the following system of equations
+            \begin{align*}
+                c_1 + c_2\lambda_1 + \dots + c_n\lambda_1^{n-1} &= 0\\
+                &\vdots\\
+                c_1 + c_2\lambda_n + \dots + c_n\lambda_n^{n-1} &= 0
+            \end{align*}
+            However, we notice that this is actually the same as solving the following matrix vector product
+            \[
+                \begin{bmatrix}
+                    1 & \lambda_1 & \dots & \lambda_1^{n-1} \\
+                    1 & \lambda_2 & \dots & \lambda_2^{n-1} \\
+                    \vdots&\vdots&\vdots&\vdots\\
+                    1 & \lambda_n & \dots & \lambda_n^{n-1} \\
+                \end{bmatrix}\begin{bmatrix}
+                    c_1\\
+                    c_2\\
+                    \vdots\\
+                    c_n
+                \end{bmatrix} = \begin{bmatrix}
+                    0\\
+                    0\\
+                    \vdots\\
+                    0
+                \end{bmatrix}
+            \]
+            Notice also that our matrix is the Vandermonde matrix, which is invertible as long as we have that
+            each of these $\lambda_k$ values are distinct (which we have by assumption!), and also notice that 
+            this matrix vector product is asking us to find the nullspace of an invertible matrix, so that means
+            that each $c_k$ must be exactly $0$. thus the vectors $u,Tu,\dots,T^{n-1}u$ are linearly independent
+            as desired. 
+
+            \secName{Note} Knowing properties about famous matrices like Hilbert, Vandermonde, etc is expected
+            and good to know in general.
+
+            \secName{Solution}
+            Let $\lambda_1,\dots,\lambda_n$ be our $n$ distinct eigenvalues, with associated eigenvectors
+            $u_1,\dots,u_n$ where $u = u_1 + \dots + u_n$ (ie we are picking the eigenvectors that make up
+            the sum of $u$). Consider $T^ku$ for $k=0,\dots,n-1$, and see that
+            \begin{align*}
+                T^ku &= \sum_{\ell=1}^nT^ku_\ell \\
+                     &= \sum_{\ell=1}^n\lambda_\ell^ku_\ell
+            \end{align*}
+            Next, for $j=1,\dots,n$ let $c_j$ be coefficients such that
+            \[
+                \sum_{j=1}^nc_jT^{j-1}u = 0
+            \]
+            See that by expanding out our above equation we get:
+            \begin{align*}
+                0 &= \sum_{j=1}^n c_j\sum_{\ell=1}^n\lambda_\ell^{j-1}u_\ell\\
+                  &= c_1\sum_{\ell=1}^nu_\ell + c_2\sum_{\ell=1}^n\lambda_\ell u_\ell + \dots + c_n\sum_{\ell=1}^n\lambda_\ell^{n-1}u_\ell \\
+                  &= (c_1 + c_2\lambda_1 + \dots + c_n\lambda_1^{n-1})u_1 + \dots + (c_1 + c_2\lambda_n + \dots + c_n\lambda_n^{n-1})u_n
+            \end{align*}
+            Since we know that these eigenvectors are linearly independent (Axler 5.10) We know that each of 
+            these sums must be $0$. So we are left with the following system of equations
+            \begin{align*}
+                c_1 + c_2\lambda_1 + \dots + c_n\lambda_1^{n-1} &= 0\\
+                &\vdots\\
+                c_1 + c_2\lambda_n + \dots + c_n\lambda_n^{n-1} &= 0
+            \end{align*}
+            However, we notice that this is actually the same as solving the following matrix vector product
+            \[
+                \begin{bmatrix}
+                    1 & \lambda_1 & \dots & \lambda_1^{n-1} \\
+                    1 & \lambda_2 & \dots & \lambda_2^{n-1} \\
+                    \vdots&\vdots&\vdots&\vdots\\
+                    1 & \lambda_n & \dots & \lambda_n^{n-1} \\
+                \end{bmatrix}\begin{bmatrix}
+                    c_1\\
+                    c_2\\
+                    \vdots\\
+                    c_n
+                \end{bmatrix} = \begin{bmatrix}
+                    0\\
+                    0\\
+                    \vdots\\
+                    0
+                \end{bmatrix}
+            \]
+            Notice also that our matrix is the Vandermonde matrix, which is invertible as long as we have that
+            each of these $\lambda_k$ values are distinct (which we have by assumption!), and also notice that 
+            this matrix vector product is asking us to find the nullspace of an invertible matrix, so that means
+            that each $c_k$ must be exactly $0$. thus the vectors $u,Tu,\dots,T^{n-1}u$ are linearly independent
+            as desired. 
+        \end{solution}
     \end{parts}
     \question Let $A\in\mathcal{M}_n\left(\mathbb{C}\right)$ and $\lambda$ be an eigenvalue of $A$.
+    \begin{solution}
+        For this problem, I am omitting the intuition section, see the committee's solutions for a good
+        intuition building approach. Essentially, we are only given that $\lambda$ is an eigenvalue of $A$
+        so we can't do anything aside from trying to apply powers to $A$ or other properties. One exception is 
+        part c, but we get the idea to look at the minimal polynomial as its roots are exactly the eigenvalues.
+    \end{solution}
     \begin{parts}
         \part Show that $\lambda^r$ is an eigenvalue of $A^r$ for $r\in\mathbb{N}$.
         \part Provide an example showing that the multiplicity of $\lambda^r$ as an eigenvalue of $A^r$ may be 

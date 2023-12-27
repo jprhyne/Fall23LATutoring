@@ -533,6 +533,51 @@ in a way most compatible with Bin 4
 \begin{questions}
     \question Suppose $V$ is an inner product space and $T\in\L{V}$ is normal. Prove that the minimal polynomial
     of $T$ has no repeated zeros
+    \begin{solution}\,\\
+        \secName{Note} This problem is implicitly assuming that $V$ is a complex vector space. If we restrict this
+        $\R$, then we can construct a normal matrix that is not diagonalizable. This is a good exercise to 
+        construct such a matrix. Our proof relies on diagonalizability, and so does the proof that Axler gives
+        in his solutions manual. A problem like this on the prelim will probably assume $\C$ if phrased this way
+        but it is much more ambiguous if the question said something to the effect of ``prove or disprove''.
+
+
+        \secName{Intuition} Recall that the powers of the terms in our minimal polynomials are the size of the
+        largest block in our Jordan Canonical Form. This is not a 
+        directly stated theorem from the textbook but it is a fact that 
+        is consistently taken advantage of on previous prelim solutions as well as in most lectures that I have
+        heard about. This concept is a consequence that we can make based on the proof of Theorem 8.60 in Axler 
+        based on the direct sums of the generalized eigenspace statements. However this is safe to assume as 
+        far as the prelims have been concerned up to know, but as always ask the proctor and/or committee for 
+        clarification on this if you are unsure.
+
+        So, since $T$ is normal, there exists an orthonormal basis of $V$ consisting of eigenvectors of $T$. So
+        the matrix representation of $T$ with respect to this basis is diagonal. It is also in Jordan form with
+        all blocks of size $1$, so the minimal polynomial will be of the form $(z-\lambda_1)\cdots(z-\lambda_k)$
+        where $k$ is the number of unique eigenvalues, thus the minimal polynomial of $T$ cannot have reapeated
+        zeros as desired.
+
+        \secName{Solution}
+        Since $V$ is a complex vector space, and $T$ is normal, we have an orthonormal basis of $V$ consisting of
+        eigenvectors of $T$. If we consider the matrix representation of $T$ with respect to this basis, then
+        we get a diagonal matrix of the form
+        \[
+            \begin{bmatrix}
+                \lambda_1 & \dots&0\\
+                \vdots & \ddots & \vdots \\
+                0 & \dots & \lambda_n
+            \end{bmatrix}
+        \]
+        Where for $k=1,\dots,n$ each $\lambda_k$ need not be unique. We also see that this matrix is also in 
+        Jordan form, with all block sizes equal $1$. This tells us that for each unique eigenvalue, the associated
+        term in the minimal polynomial will have degree $1$ as the degree of each term is the largest block size.
+        Thus our minimal polynomial will be of the form
+        $p(z) = (z-\lambda_1)\cdots(z-\lambda_m)$ where $m$ is the number of distinct eigenvalues. This means that
+        $p$ has no repeated zeros as desired.
+
+        \secName{Alternative Solution}
+        There is another solution available via the solution to 8.C.12 in Axler's solutions. I don't follow the
+        reason behind some of the steps, but it should be acceptable.
+    \end{solution}
 \end{questions}
 
 \section{Other Problems}
@@ -540,5 +585,55 @@ These are from the Berkely Problems pdf.
 \begin{questions}
     \question (7.5.16) Let $A$ and $B$ denote real $n\times n$ symmetric matrices such that $AB=BA$.
     Prove that $A$ and $B$ share a common eigenvector in $\R^n$.
+    \begin{solution}
+
+        \secName{Intuition} We have two real symmetric matrices, so it is safe to assume that the real spectral
+        theorem is going to be a good approach for us. IE that these matrices are diagonalizable and have 
+        eigenvalues. Let $\lambda$ be an eigenvalue with associated eigenvector $v$.
+
+        See that 
+        \begin{align*}
+            Av = \lambda v &\implies BAv = B(\lambda v) \\
+            &\implies ABv = \lambda Bv
+        \end{align*}
+
+        The second line comes from the fact that $AB=BA$.
+
+        Now, we have that $Bv$ is an eigenvector associated with eigenvalue $\lambda$ of $A$. This means that
+        $Bv\in E(\lambda,A)$ ie $Bv$ is in the eigenspace associated with $\lambda$ of $A$. Since $B$ is 
+        invariant in this subspace, and $B$ is diagonalizable, there must exist some $u\in E(\lambda,A)$ such that
+        for some eigenvalue of $B$ denoted $\lambda'$, $Bu = \lambda'u$. As if such a vector did not exist, then
+        there would be a set of vectors in $\R^n$ that cannot be represented using eigenvectors of $B$. Thus $u$
+        is an eigenvector of $B$, and since $u\in E(\lambda,A)$, we have that $u$ is also an eigenvector of $A$
+        associated with eigenvalue $\lambda$.
+
+        \secName{Note} This is a type of problem that I have seen variations of before. It's essentially testing
+        how comfortable you are with invariant subspaces of a vector space and consequences of diagonalizability.
+
+        \secName{Solution}
+        Since $A$ and $B$ are real symmetric matrices, we know that both of these matrices are diagonalizable. 
+        This means that there exists a basis of $\R^n$ that consists of eigenvectors of $A$ and another basis
+        consisting of eigenvectors of $B$. Let $\lambda_A$ be an eigenvalue of $A$ and let $v\in\R^n$ be an 
+        associated eigenvector. We see that from the definition of eigenvectors and how $A$ and $B$ are defined
+        that
+        \begin{align*}
+            Av = \lambda_A v &\implies BAv = B(\lambda_A v) \\
+            &\implies ABv = \lambda_A Bv
+        \end{align*}
+
+        So, we have that if $v$ is an eigenvector of $A$, then $Bv$ is an eigenvector of $A$ associated with the
+        same eigenvalue. In other words, $v\in E(\lambda_A,A)\implies Bv\in E(\lambda_A,A)$. This gives us that
+        $B$ is invariant over the eigenspace of $A$ associated with eigenvalue $\lambda_A$. From here, we will show
+        that there exists some $u\in E(\lambda_A,A)$ such that $Bu = \lambda_Bu$ for some eigenvalue of $B$ 
+        denoted $\lambda_B$.
+
+        Since $B$ is real symmetric, if we restrict the inputs to be only in $E(\lambda_A,A)$ it is still symmetric
+        as any vector in $E(\lambda_A,A)$ is also in $\R^n$. Thus, $B$ has an eigenvalue $\lambda_B$ such that
+        $Bu = \lambda_Bu$ for some $u\in E(\lambda_A,A)$. Since $u\in E(\lambda_A, A)$, we also have that 
+        $Au = \lambda_Au$, thus $u$ is an eigenvector of both $A$ and $B$ as desired.
+
+        \secName{Note 2} The above proof is essentially a more fleshed out version of an existing proof in the
+        Berkeley PDF.
+    \end{solution}
 \end{questions}
 \end{document}

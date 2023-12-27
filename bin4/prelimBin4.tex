@@ -455,10 +455,77 @@ in a way most compatible with Bin 4
     \end{solution}
     \begin{parts}
         \part Show that $\lambda^r$ is an eigenvalue of $A^r$ for $r\in\mathbb{N}$.
+        \begin{solution}
+            Let $r\in\mathbb{N}$ and $v$ be an eigenvector associated with $\lambda$, 
+            since $\lambda$ is an eigenvalue of $A$, we see that:
+            \begin{align*}
+                A^rv &= \underbrace{A\dots A}_\text{$r$ times}v\\
+                &=\lambda\underbrace{A\dots A}_\text{$r-1$ times}v\\
+                &\vdots\\
+                &=\lambda^rv
+            \end{align*}
+            Thus, $\lambda^r$ is an eigenvalue of $A^r$ as desired.
+        \end{solution}
         \part Provide an example showing that the multiplicity of $\lambda^r$ as an eigenvalue of $A^r$ may be 
         strictly higher than the multiplicity of $\lambda$ as an eigenvalue of $A$
+        \begin{solution}
+            Consider the permutation matrix 
+            \[
+                A = \begin{bmatrix}
+                0 & 1\\ 
+                1 & 0 
+                \end{bmatrix}
+            \]
+            $A$ has eigenvalues $-1$ and $1$. We see this from
+            \begin{align*}
+                \det\left(A - \lambda I\right) = 0 &\implies \left|\begin{matrix}
+                    -\lambda & 1 \\
+                1 & -\lambda\end{matrix}\right| = 0 \\
+                &\implies \lambda^2 - 1 = 0 \\
+                &\implies \lambda^2 = 1 \\
+                &\implies \lambda = \pm 1
+            \end{align*}
+
+            However, if we compute $A^2$, we get $A^2 = I$ which only has eigenvalue $1$. So in $A$ $1$ has 
+            multiplicity $1$ while in $A^2$, $1^2=1$ has multiplicity $2$.
+        \end{solution}
         \part Show that $A^\top$ has the same eigenvalues as $A$.
+            \begin{solution}
+                Let $p(t)$ be the characteristic polynomial of $A$. Write $p(z)$ in the form
+                \[
+                    p(z) = \sum_{k=0}^n c_kz^k
+                \] for some coefficients $c_k$.
+                We also know from the definition of the characteristic polynomial, that $p(A) = 0$. See also that
+                \begin{align*}
+                    p(A) = 0 &\implies \sum_{k=0}^n c_kA^k = 0 \\ 
+                    &\implies \left(\sum_{k=0}^n c_kA^k\right)^\top = 0^\top \\
+                    &\implies \sum_{k=0}^n c_k\left(A^k\right)^\top = 0 \\
+                    &\implies \sum_{k=0}^n c_k\left(A^\top\right)^k = 0 \\
+                    &\implies p(A^\top) = 0
+                \end{align*}
+                Since $p$ is also a polynomial of degree $n$ such that $p(A^\top) = 0$, the roots of $p$ are also
+                the eigenvalues of $A^\top$, thus $A$ and $A^\top$ share eigenvalues.
+            \end{solution}
         \part Show that if $A$ is orthogonal, then $\frac{1}{\lambda}$ is an eigenvalue of $A$.
+            \begin{solution}
+                \secName{Note} This problem likely has a typo. Instead of orthogonal, it should probably be 
+                hermitian, however the standard definition of orthogonal does work in this context, it's just
+                an odd choice to phrase it this way.
+
+                \secName{Solution}
+                First, we show that if $\lambda$ is an eigenvalue of $A$, and $A^{-1}$ exists, then $\frac{1}
+                {\lambda}$ is an eigenvalue of $A^{-1}$.
+
+                Let $\lambda$, $v$, be an eigenvalue with corresponding eigenvector. See that
+                \begin{align*}
+                    Av = \lambda v &\implies A^{-1}Av = A^{-1}\lambda v \\
+                    &\implies v = \lambda A^{-1}v \\
+                    &\implies \frac{1}{\lambda}v = A^{-1}v
+                \end{align*}
+                Thus, we have that $\frac{1}{\lambda}$, is an eigenvalue of $A^{-1}$. Recall that since we are
+                assuming that $A$ is  orthogonal, then $A^\top=A^{-1}$, so from part (c), $\frac{1}{\lambda}$ is
+                an eigenvalueof $A$ as desired provided that $A$ orthogonal and $\lambda$ is an eigenvalue of $A$.
+            \end{solution}
     \end{parts}
 \end{questions}
 

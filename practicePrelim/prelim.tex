@@ -1,0 +1,97 @@
+% Hacky way of allowing us to compile this with and without answers using the makefile in this folder
+\ifdefined\isanswers
+    \documentclass[answers]{exam}
+\else
+    \documentclass{exam}
+\fi
+% Use mystyle file. This is a congolmeration of things I've used over the years. Most is stolen from either previous professors or stack overflow. It may or may not be cited. Assume I didn't come up with any of it myself.
+\usepackage{mystyle}
+
+\newcommand{\spanV}[1]{\text{span}\left(#1\right)}
+\renewcommand{\L}[1]{\mathcal{L}\left(#1\right)}
+\newcommand{\ip}[1]{\left\langle#1\right\rangle}
+\newcommand{\M}[1]{\mathcal{M}\left(#1\right)}
+
+\title{Practice Prelim}
+\date{\today}
+\author{}
+
+\begin{document}
+\maketitle
+
+Assume that $\F$ is a field of elements either real or complex (ie any proofs using $\F$ should hold for either
+real or complex numbers)
+
+\section*{Section 1 Problems}
+
+\begin{questions}
+    % Axler 2.A Exercise 11
+    \question Let $V$ be a vector space over a field $\F$. Suppose $v_1,\dots,v_m$ is linearly independent in $V$ and $w\in V$. Show that $v_1,\dots,v_m,w$ is
+    linearly independent if and only if 
+    \[
+        w\not\in\spanV{v_1,\dots,v_m}
+    \]
+    % Axler 6.C Exercise 3
+    \question Let $V$ be an inner product space over a field $\F$. Suppose that $U$ is a subspace of $V$ and 
+    $u_1,\dots,u_m$ forms a basis of $U$. Furthermore, suppose that $u_1,\dots,u_m,w_1,\dots,w_n$ forms a basis
+    of $V$. Prove that if the Gram-Schmidt Procedure is applied to the basis of $V$ above, producing a list
+    $e_1,\dots,e_m,f_1,\dots,f_n$, then $e_1,\dots,e_m$ forms an orthonormal basis of $U$ and $f_1,\dots,f_n$ is
+    an orthonormal basis of $U^\perp$
+
+    \textbf{\underline{Note:}} If you are unfamiliar with the Gram-Schmidt Procedure, see Theorem 6.31 in Axler. 
+    Familiarity with this theorem is expected, but you will probably not be expected to apply it. (However as 
+    always ask the committee as they are the only ones qualified to make such statements with exactness).
+    % 2021 August prelim problem 3
+    \question For each of the following $4$ statements, give either a counterexample or a reason why it is true.
+    \begin{parts}
+        \part For every real matrix $A$ there is a real matrix $B$ with $B^{-1}AB$ diagonal.
+        \part For every symmetric real matrix $A$, there is a real matrix $B$ with $B^{-1}AB$ diagonal.
+        \part For every complex matrix $A$ there is a complex matrix $B$ with $B^{-1}AB$ diagonal.
+        \part For every symmetric complex matrix $A$ there is a complex matrix $B$ with $B^{-1}AB$ diagonal.
+    \end{parts}
+    % Axler  7.B Exercise 5
+    \question Suppose $V$ is a real inner product space and $T\in\L{V}$. Prove that $T$ is self-adjoint if and
+    only if all pairs of eigenvectors corresponding to distinct eigenvalues of $T$ are orthogonal and 
+    \[
+        V = E(\lambda_1,T)\oplus \cdots \oplus E(\lambda_m,T),
+    \]
+    where $\lambda_1,\dots,\lambda_m$ denote the distinct eigenvalues of $T$.
+
+    \textbf{\underline{Note:}} This is very similar to prooving $(a)\implies (d)$ in Theorem 5.41. So, you 
+    cannot use this theorem!
+\end{questions}
+\newpage
+\section*{Section 2 Problems}
+Pick 2 of the following \\
+\begin{questions}
+\setcounter{question}{4}
+    % 2021 January prelim problem 5
+    \question Define $\R^{n\times n}$ to be the space of all real $n-\text{by}-n$ matrices, suppose $S\in\R^{n\times n}$,
+    and define the linear mapping
+    \[
+        \mathcal{T}:\R^{n\times n}\rightarrow\R^{n\times n}, \qquad \mathcal{T}:P\mapsto PS + SP
+    \]
+    \begin{parts}
+        \part Prove that if $\lambda$ is an eigenvalue of $S$, $u$ is the corresponding eigenvector, and 
+        $u\in\nullS{\mathcal{T}P}$, then $Pu$ is also an eigenvector of $S$ with eigenvalue $-\lambda$.
+        \part Prove that if $S$ is symmetric positive definite, then the mapping $\mathcal{T}$ is injective.
+    \end{parts}
+    % 2021 August prelim problem 6
+    \question Let $A$ be a real $3\times 3$ symmetric matrix, whose eigenvalues are $\lambda_1,\lambda_2, 
+    \text{ and } \lambda_3.$ Prove the following:
+    \begin{parts}
+        \part If the trace of $A$, is not an eigenvalue of $A$, then $(\lambda_1+\lambda_2)(\lambda_2+\lambda_3)
+        (\lambda_1+\lambda_3)\neq 0$
+        \part If $(\lambda_1+\lambda_2)(\lambda_2+\lambda_3)(\lambda_1+\lambda_3)\neq 0$, then the map 
+        $T:S\rightarrow S$ is an isomorphism, where $T(W) = AW + WA$ and $S$ is the space of $3\times 3$ real skew-symmetric matrices
+        (if $W^\top = -W$, then $W$ is called skew-symmetric).
+    \end{parts}
+    % 2022 August prelim problem 7.
+    \question Let $T$ be a linear operator on a four dimensional complex vector space that satisfies the 
+    polynomial equation $P(T) = T^4 + 2T^3 - 2T - I = 0$ where $I$ is the identity operator on $V$. Suppose
+    that $\left|\text{trace}\left(T\right)\right| = 2$ and that $\dim\range\left(T + I\right) = 2$. Give
+    a Jordan canonical form of $T$.
+    % 2022 February prelim problem 8. This one is hard. I would skip this one if I was taking the test
+    \question Let $A$ be an $n-\text{by}-n$ matrix with complex entries. Prove that A is the sum of two nonsingular matrices. 
+\end{questions}
+\end{document}

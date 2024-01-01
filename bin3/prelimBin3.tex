@@ -7,6 +7,8 @@
 % Use mystyle file. This is a congolmeration of things I've used over the years. Most is stolen from either previous professors or stack overflow. It may or may not be cited. Assume I didn't come up with any of it myself.
 \usepackage{mystyle}
 \renewcommand{\L}[1]{\mathcal{L}\left(#1\right)}
+\newcommand{\ip}[1]{\left\langle#1\right\rangle}
+\newcommand{\M}[1]{\mathcal{M}\left(#1\right)}
 
 \title{Bin 3 Problems}
 \date{\today}
@@ -21,6 +23,58 @@ in a way most compatible with Bin 3
 
 \section{Prelim Problems}
 \begin{questions}
+    \question Let $A$ be a Hermitian $n\times n$ complex matrix . Show that if 
+    \question Let $T$ be a positive operator on a complex inner product space $V$ and $S$ be an operator on $V$
+    such that $ST = -TS$. Show that $ST=TS=0$.
+    \begin{solution}
+        \secName{Intuition} Since in this problem, we are not given much information about $S,T$ aside from the
+        fact that $T$ is positive and $S$ and $T$ nearly commute. So we should look at eigenvalues and 
+        eigenvectors! Since $T$ is positive, we know it has non-negative eigenvalues and is self
+        adjoint from Axler 7.35. So from the Complex spectral theorem, we have that $T$ is diagonalizable in an
+        orthonormal basis consisting of eigenvectors of $T$. Let $\lambda$ be an eigenvale of $T$ with associated
+        eigenvector $v$. This means $Tv = \lambda v$. However we also know that
+        \begin{align*}
+            \lambda v = Tv &\iff S\lambda v = STv\\
+            &\iff \lambda Sv = STv \\
+            &\iff \lambda Sv = -TSv\\
+            &\iff -\lambda Sv = TSv
+        \end{align*}
+        So we have two cases. The first case is that $Sv = 0$. If this is the case, then $STv = -TSv = 0$.
+        However assume that $Sv\neq 0$. This means that $Sv$ is an eigenvector of $T$ associated with eigenvalue
+        $-\lambda$. Since all eigenvalues of $T$ are non-negative we have that both
+        \begin{align*}
+            \lambda &\geq 0 \\
+            -\lambda&\geq 0
+        \end{align*}
+        This means that $\lambda = 0$. Then, $STv = -TSv = 0$.
+
+        Since we know that for all eigenvectors of $T$, we have that $TSv = STv = 0$, we know this also holds 
+        for a basis consisting of eigenvectors of $T$, so $TS=ST=0$ as desired.
+
+
+        \secName{Solution} Since $T$ is positive, by Axler 7.35 it is both self-adjoint and has non-negative
+        eigenvalues. Since $T$ is self adjoint, we know that there exists an orthonormal basis of $V$ consisting
+        of eigenvectors of $T$. Denote this basis $v_1,\dots,v_n$. Now, let $(\lambda,v)$ be an arbitrary 
+        eigenpair of $T$. IE $Tv = \lambda v$. We see that
+        \begin{align*}
+            \lambda v = Tv &\iff S\lambda v = STv \\
+            &\iff \lambda Sv = STv \\
+            &\iff \lambda Sv = -TSv \\
+            &\iff TSv = -\lambda Sv
+        \end{align*}
+
+        From here, we have $2$ cases for $Sv$, the first being that $Sv = \vec{0}$. If this is the case then
+        $STv = TSv = \vec{0}$. Otherwise, $Sv\neq 0$. This means that $Sv$ is an eigenvector of $T$ associated
+        with $-\lambda$. However, since $T$ has non-negative eigenvalues we know
+        \begin{align*}
+            \lambda &\geq 0 \\
+            -\lambda&\geq 0
+        \end{align*}
+        So, $\lambda = 0$. In this case we know $STv = TSv = 0$. Since we have that for all eigenvectors of $T$
+        denoted $v$,
+        $STv = TSv = 0$. We also know this is the case for $(v_1,\dots,v_n)$ (our basis of eigenvectors of $T$). 
+        Since for all $k=1,\dots,n$, $STv_k = TSv_k = 0$, $ST=TS=0$ as desired.
+    \end{solution}
 \end{questions}
 
 \section{Axler Problems}

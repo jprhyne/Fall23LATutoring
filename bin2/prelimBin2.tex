@@ -839,15 +839,179 @@ in a way most compatible with Bin 2
         \]
         as desired.
     \end{solution}
-    \question Suppose $e_1,\dots,e_m$ is an orthonormal list of vectors in $V$. Let $v\in V$. Prove that
+    \question Let $V$ be an inner product space over a field $\F$.
+    Suppose $e_1,\dots,e_m$ is an orthonormal list of vectors in $V$. Let $v\in V$. Prove that
     \[
         \norm{v}{}^2 = |\ip{v,e_1}|^2 + \cdots + |\ip{v,e_m}|^2
     \]
     if and only if $v\in\text{span}\left({e_1,\dots,e_m}\right)$.
     \begin{solution}
 
-        \secName{Intuition} This is asking us to prove a little stronger version of Axler 6.25 and 6.30. While the
-        wording is slightly different, it is similar in at least the backwards direction.
+        \secName{Intuition} 
+        This is asking us to prove a little stronger version of Axler 6.25 and 6.30. While the
+        wording is slightly different, it is similar in at least the backwards direction. Due to this, the 
+        backwards direction is a little easier to do, so we start there. (Also, we should not appeal to these 
+        theorems as they would trivialize the proof in this direction). In addition, we are not given any 
+        information on what this norm looks like, so we are assuming it is the norm induced by the inner product
+        on $V$.
+
+        $\impliedby$ direction
+
+        Let $v\in\text{span}\left({e_1,\dots,e_m}\right)$, and this means that there exists some 
+        $a_1,\dots,a_m\in\F$ such that 
+        \[
+            v = a_1e_1 + \cdots + a_me_m = \sum_{k=1}^ma_ke_k.
+        \]
+        Now, we substitute this equation into our norm statement and simplify.
+        \begin{align*}
+            \norm{v}{}^2 &= \ip{v,v} \\
+            &= \ip{\sum_{i=1}^ma_ie_i,\sum_{j=1}^ma_je_j} \\
+            &= \sum_{i=1}^m\ip{a_ie_i, \sum_{i=j}^ma_je_j} \\
+            &= \sum_{i=1}^ma_i\ip{e_i, \sum_{i=j}^ma_je_j} \\
+            &= \sum_{i=1}^m\sum_{j=1}^ma_i\ip{e_i,a_je_j} \\
+            &= \sum_{i=1}^m\sum_{j=1}^ma_i\overline{a}_j\ip{e_i,e_j} 
+        \end{align*}
+        However, note that since $e_1,\dots,e_m$ is an orthonormal list of vectors in $V$, we know that for
+        all $i,j$
+        \[
+            \ip{e_i,e_j} = 
+            \begin{cases}
+                1 & \text{ if }i=j \\
+                0 & \text{ otherwise}
+            \end{cases}
+        \]
+        So our double sum can be rewritten as
+        \[
+            \sum_{i=1}^ma_i\overline{a}_i\ip{e_i,e_i} = \sum_{i=1}^m\abs{a_i}^2
+        \]
+        which is the exact form we want! Thus, we have shown
+        \[
+            v\in\text{span}\left({e_1,\dots,e_m}\right) \implies \norm{v}{}^2 = |\ip{v,e_1}|^2 + \cdots + |\ip{v,e_m}|^2
+        \]
+
+        Now, let's show the $\implies$ direction. We will do this through contradiction IE assume that
+        \[
+            \norm{v}{}^2 = |\ip{v,e_1}|^2 + \cdots + |\ip{v,e_m}|^2
+        \]
+        and $v\not\in\spanS{e_1,\dots,e_m}$.
+
+        Since $v\not\in\spanS{e_1,\dots,e_m}$ but $v\in V$, we first extend $(e_1,\dots,e_m)$ to an orthonormal
+        basis of $V$. Denote this basis $(e_1,\dots,e_m,e_{m+1},\dots,e_n)$. We want to create such a basis 
+        so that we can show a contradiction using the norm statement. This means that there exists some 
+        $a_1,\dots,a_m,a_{m+1},\dots,a_n\in\F$ where at least one of $a_{m+1},\dots,a_n$ non-zero. Let $j$
+        be the first index such that $j\geq m+1$ and $a_j\neq 0$ (this will make some later inequalities easier to
+        deal with).
+
+        Now, similarly as above, we can write $v$ in terms of a linear combination of this basis. See that
+        \[
+            v = a_1e_1 + \cdots + a_ne_n = \sum_{k=1}^na_ke_k.
+        \] 
+        Similarly as above, we rewrite our norm statement and simplify.
+        \begin{align*}
+            \norm{v}{}^2 &= \ip{v,v} \\
+            &= \ip{\sum_{i=1}^na_ie_i,\sum_{j=1}^na_je_j} \\
+            &= \sum_{i=1}^n\ip{a_ie_i, \sum_{i=j}^na_je_j} \\
+            &= \sum_{i=1}^na_i\ip{e_i, \sum_{i=j}^na_je_j} \\
+            &= \sum_{i=1}^n\sum_{j=1}^na_i\ip{e_i,a_je_j} \\
+            &= \sum_{i=1}^n\sum_{j=1}^na_i\overline{a}_j\ip{e_i,e_j} \\
+            &= \sum_{i=1}^n\abs{a_i}^2\\
+            &\geq\sum_{i=1}^m\abs{a_i}^2 + \abs{a_j} \\
+            &> \sum_{i=1}^m\abs{a_i}^2 \\
+            &= \norm{v}{}^2
+        \end{align*}
+        So we have that $\norm{v}{}^2 > \norm{v}{}^2$ which is not possible. Thus we have shown that
+        \[
+            v\in\text{span}\left({e_1,\dots,e_m}\right) \impliedby \norm{v}{}^2 = |\ip{v,e_1}|^2 + \cdots + |\ip{v,e_m}|^2
+        \]
+
+        So, in all we have shown that 
+        \[
+            v\in\text{span}\left({e_1,\dots,e_m}\right) \iff \norm{v}{}^2 = |\ip{v,e_1}|^2 + \cdots + |\ip{v,e_m}|^2
+        \] 
+        as desired.
+
+
+        \secName{Solution}
+        
+        First, we prove the $\impliedby$ direction. IE assume that $v\in\spanS{e_1,\dots,e_m}$. This means that 
+        there exists some 
+        $a_1,\dots,a_m\in\F$ such that 
+        \[
+            v = a_1e_1 + \cdots + a_me_m = \sum_{k=1}^ma_ke_k.
+        \]
+        Next, we compute the norm of $v$. We assume the norm here is the induced norm based on the inner product
+        on $V$.
+        \begin{align*}
+            \norm{v}{}^2 &= \ip{v,v} \\
+            &= \ip{\sum_{i=1}^ma_ie_i,\sum_{j=1}^ma_je_j} \\
+            &= \sum_{i=1}^m\ip{a_ie_i, \sum_{i=j}^ma_je_j} \\
+            &= \sum_{i=1}^ma_i\ip{e_i, \sum_{i=j}^ma_je_j} \\
+            &= \sum_{i=1}^m\sum_{j=1}^ma_i\ip{e_i,a_je_j} \\
+            &= \sum_{i=1}^m\sum_{j=1}^ma_i\overline{a}_j\ip{e_i,e_j} 
+        \end{align*}
+        However, note that since $e_1,\dots,e_m$ is an orthonormal list of vectors in $V$, we know that for
+        all $i,j$
+        \[
+            \ip{e_i,e_j} = 
+            \begin{cases}
+                1 & \text{ if }i=j \\
+                0 & \text{ otherwise}
+            \end{cases}
+        \]
+        So our double sum can be rewritten as
+        \[
+            \sum_{i=1}^ma_i\overline{a}_i\ip{e_i,e_i} = \sum_{i=1}^m\abs{a_i}^2
+        \]
+        So, we have shown that
+        \[
+            v\in\text{span}\left({e_1,\dots,e_m}\right) \implies \norm{v}{}^2 = |\ip{v,e_1}|^2 + \cdots + |\ip{v,e_m}|^2
+        \]
+        as desired.
+
+        Next, we show the $\implies$ direction. We will do this by contradiction. So, assume that
+        \[
+            \norm{v}{}^2 = |\ip{v,e_1}|^2 + \cdots + |\ip{v,e_m}|^2
+        \]
+        and that $v\not\in\spanS{e_1,\dots,e_m}$.
+
+        Extend $e_1,\dots,e_m$ to be an orthonormal list of vectors in $V$. We know that we are adding at least
+        one term as if $v\in V$ and $v\not\in\spanS{e_1,\dots,e_m}$ then there must be at least one more 
+        linearly independent vector in $V$ as otherwise this would be impossible to do. Denote this extended
+        basis as $(e_1,\dots,e_m,e_{m+1},\dots,e_n)$. 
+
+        Since this is a basis of $V$, there exist $a_1,\dots,a_n\in\F$ such that 
+        \[
+            v = \sum_{k=1}^n a_kv_k
+        \]
+
+        In addition, we know at least one of $a_{m+1},\dots,a_n$ are non-zero as we are assuming 
+        $v\not\in\spanS{e_1,\dots,e_m}$. For ease of notation, let $j$ be the first index such that $a_j\neq0$
+        and $j\geq m+1$.
+
+        Similarly as above, we rewrite our norm statement and simplify.
+        \begin{align*}
+            \norm{v}{}^2 &= \ip{v,v} \\
+            &= \ip{\sum_{i=1}^na_ie_i,\sum_{j=1}^na_je_j} \\
+            &= \sum_{i=1}^n\ip{a_ie_i, \sum_{i=j}^na_je_j} \\
+            &= \sum_{i=1}^na_i\ip{e_i, \sum_{i=j}^na_je_j} \\
+            &= \sum_{i=1}^n\sum_{j=1}^na_i\ip{e_i,a_je_j} \\
+            &= \sum_{i=1}^n\sum_{j=1}^na_i\overline{a}_j\ip{e_i,e_j} \\
+            &= \sum_{i=1}^n\abs{a_i}^2\\
+            &\geq\sum_{i=1}^m\abs{a_i}^2 + \abs{a_j} \\
+            &> \sum_{i=1}^m\abs{a_i}^2 \\
+            &= \norm{v}{}^2
+        \end{align*}
+        So we have that $\norm{v}{}^2 > \norm{v}{}^2$ which is our contradiction. Thus we have shown that
+        \[
+            v\in\text{span}\left({e_1,\dots,e_m}\right) \impliedby \norm{v}{}^2 = |\ip{v,e_1}|^2 + \cdots + |\ip{v,e_m}|^2
+        \]
+
+        So, in all we have shown that 
+        \[
+            v\in\text{span}\left({e_1,\dots,e_m}\right) \iff \norm{v}{}^2 = |\ip{v,e_1}|^2 + \cdots + |\ip{v,e_m}|^2
+        \] 
+        as desired.
+        
     \end{solution}
 \end{questions}
 

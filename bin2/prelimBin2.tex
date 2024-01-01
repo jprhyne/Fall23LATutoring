@@ -7,6 +7,10 @@
 % Use mystyle file. This is a congolmeration of things I've used over the years. Most is stolen from either previous professors or stack overflow. It may or may not be cited. Assume I didn't come up with any of it myself.
 \usepackage{mystyle}
 \renewcommand{\L}[1]{\mathcal{L}\left(#1\right)}
+\newcommand{\ip}[1]{\left\langle#1\right\rangle}
+\newcommand{\M}[1]{\mathcal{M}\left(#1\right)}
+\newcommand{\latex}{\LaTeX}
+\newcommand{\spanS}[1]{\text{Span}\left(#1\right)}
 
 \title{Bin 2 Problems}
 \date{\today}
@@ -21,11 +25,831 @@ in a way most compatible with Bin 2
 
 \section{Prelim Problems}
 \begin{questions}
+    \question Let $u$ be a unit vector in an $n-\text{dimensional}$ inner product space $V$ over $\R$. Define 
+    $T\in\L{V}$ as:
+    \[
+        T(x) = x - 2\ip{x,u}u, \quad x\in V
+    \]
+    Show that 
+    \begin{parts}
+        \part $T$ is an isometry
+        \begin{solution}
+
+            \secName{Intuition} For this problem, we will need a couple of facts. The first one is that
+            we want to extend $u$ to be an orthonormal basis of $V$. the reason this would be a good place to
+            start is because we see an inner product in the definition of $T$ and also the definition of an 
+            isometry is as follows
+            \begin{defin} Axler 7.37\\
+                An operator $S\in\L{V}$ is called an isometry if for all $v\in V$, 
+                \[
+                    \norm{Sv}{} = \norm{v}{}
+                \]
+            \end{defin}
+            Which is an inner product squared. So if we have an orthonormal basis, these equalities are much much
+            easier to deal with.
+
+            Now that we have $(u,u_2,\dots,u_n)$ is an orthonormal basis of $V$, then we see that 
+            \begin{align*}
+                T(u) &= u - 2\ip{u,u}u = -u \\
+                T(u_k) &= u_k - 2\ip{u_k,u}u = u_k \qquad\qquad \text{for }k=2,\dots,n
+            \end{align*}
+
+            At this point, it is possible to be done. If we happen to remember Theorem 7.42 in Axler, we can 
+            appeal to parts (a) and (d) on that one and that's it. For this problem, even though this was in the second half, it has
+            $3$ parts so we are not trivializing this problem nor making it exceptionally short. However, if this
+            problem was in the first half and it only had 1 or 2 parts, it would be a good idea to not appeal
+            to this theorem. If you are unsure, ask the proctor or err on the side of caution
+
+            \begin{theorem} Axler 7.42
+                Suppose $S\in\L{V}$. Then the following are equivalent.
+                \begin{enumerate}
+                    \item $S$ is an isometry
+                    \item $\ip{Su,Sv} = \ip{u,v}$\qquad\qquad for all $u,v\in V$
+                    \item $Se_1,\dots,Se_n$ is orthonormal for every orthonormal list of vectors
+                        $e_1,\dots,e_n$ in $V$
+                    \item There exists some orthonormal basis $e_1,\dots,e_n$ of $V$ such that 
+                        $Se_1,\dots,Se_n$ is orthonormal
+                    \item $S^*S = I$
+                    \item $SS* = I$
+                    \item $S^*$ is an isometry 
+                    \item $S$ is invertible and $S^{-1} = S^*$
+                \end{enumerate}
+            \end{theorem}
+
+            However, let's say we forget this theorem or we don't feel comfortable appealing to it. Then we would
+            need to show that our operator satsifies the previous definition directly. For ease of notation, we
+            assign $u_1 = u$ in our previous orthonormal basis.
+
+            So, let $v\in V$, we aim to show that $\norm{Tv}{} = \norm{v}{}$
+
+            Useful theorems for this part are Axler 6.25 and 6.30. These are listed below for convenience
+
+            \begin{theorem} Axler 6.25 \label{thm:625}
+
+                If $e_1,\dots,e_n$ is an orthonormal list of vectors in $V$, then 
+                \[
+                    \norm{\sum_{k=1}^na_ke_k}{}^2 = \sum_{k=1}^n |a_k|^2
+                \]
+            \end{theorem} 
+
+            \begin{theorem} Axler 6.30 \label{thm:630}
+
+                Suppose $e_1,\dots,e_n$ is an orthonormal basis of $V$ and $v\in V$. Then
+                \begin{align}
+                    v &= \sum_{k=1}^n \ip{v,e_k}e_k \nonumber\\
+                    \norm{v}{}^2 &= \sum_{k=1}^n\left|\ip{v,e_k}\right|^2\label{eq:normV}
+                \end{align}
+            \end{theorem}
+
+            So we will show that $\norm{Tv}{}^2$ equals equation \eqref{eq:normV}. In order to do this,
+            we will first write out what $Tv$ is in terms of the coefficients of $v$. See that
+            \begin{align*}
+                Tv &= T\left(\sum_{k=1}^n \ip{v,u_k}u_k\right) \\
+                &= \sum_{k=1}^n \ip{v,u_k}Tu_k \\
+                &= -\ip{v,u}u + \sum_{k=2}^n \ip{v,u_k}u_k
+            \end{align*}
+
+            Notice that this is almost the exact same as $v$! In fact, it only has the first term negated. We are
+            also in a form compatible with Theorem \ref{thm:625}, so we have that 
+            \begin{align*}
+                \norm{Tv}{}^2 &= \norm{-\ip{v,u}u + \sum_{k=2}^n \ip{v,u_k}u_k}{}^2 \\
+                &= |-\ip{v,u}|^2 + \sum_{k=2}^n |\ip{v,u_k}|^2 \\
+                &= |\ip{v,u}|^2 + \sum_{k=2}^n |\ip{v,u_k}|^2 \\
+                &= \sum_{k=1}^n |\ip{v,u_k}|^2 \\
+                &= \norm{v}{}^2
+            \end{align*}
+            Now, take the square root of both sides, and we get that
+            \[
+                \norm{Tv}{} = \norm{v}{}
+            \]
+            Since $v$ was an arbitrary vector in $V$, this holds for all vectors in $V$. Thus $T$ is an isometry
+            as desired.
+
+            \secName{Solution}
+
+            \textbf{\underline{Aside}:} For this one, I am going to show directly that 
+            $\norm{Tv}{} = \norm{v}{}$ for all $v\in V$.
+
+            First, extend $u$ to an orthonormal basis of $V$ denoted $u_1,\dots,u_n$ where $u_1 = u$. See that
+            for these basis vectors, 
+            \begin{align*}
+                T(u) &= u - 2\ip{u,u}u = -u \\
+                T(u_k) &= u_k - 2\ip{u_k,u}u = u_k \qquad\qquad \text{for }k=2,\dots,n
+            \end{align*}
+
+            Now, we aim to show that $\norm{Tv}{} = \norm{v}{}$ for all $v\in V$.
+
+            Let $v\in V$. We know from Theorem 6.30 in Axler that
+            \begin{align*}
+                v &= \sum_{k=1}^n \ip{v,u_k}u_k \\
+                \norm{v}{}^2 &= \sum_{k=1}^n\left|\ip{v,u_k}\right|^2
+            \end{align*}
+
+            This means that we have from above
+            \begin{align*}
+                Tv &= T\left(\sum_{k=1}^n \ip{v,u_k}u_k\right) \\
+                &= \sum_{k=1}^n \ip{v,u_k}Tu_k \\
+                &= \ip{v,u}Tu + \sum_{k=2}^n \ip{v,u_k}Tu_k \\
+                &= -\ip{v,u}u + \sum_{k=2}^n \ip{v,u_k}u_k
+            \end{align*}
+
+            From Theorem 6.25, we can now say that
+
+            \begin{align*}
+                \norm{Tv}{}^2 &= \norm{-\ip{v,u}u + \sum_{k=2}^n \ip{v,u_k}u_k}{}^2 \\
+                &= |-\ip{v,u}|^2 + \sum_{k=2}^n |\ip{v,u_k}|^2 \\
+                &= |\ip{v,u}|^2 + \sum_{k=2}^n |\ip{v,u_k}|^2 \\
+                &= \sum_{k=1}^n |\ip{v,u_k}|^2 \\
+                &= \norm{v}{}^2
+            \end{align*}
+            Where the last step is the second equation in Theorem 6.30.
+
+            Next, take the square root of both sides, and we get that
+            \[
+                \norm{Tv}{} = \norm{v}{}
+            \]
+            Since $v$ was an arbitrary vector in $V$, this holds for all vectors in $V$. Thus $T$ is an isometry
+            as desired.
+
+        \end{solution}
+        \part If $A=\M{T}$ is a matrix representation of $T$, then $\det A = -1$ 
+        \begin{solution}
+            
+            \secName{Note} There are two ways to approach this problem. The solution provided by the prelim 
+            committee takes a matrix algebra approach. I will briefly justify why they made the claim that they
+            do, but I will take a different approach for this one.
+
+            \secName{Intuition}
+            
+            \secName{Matrix Algebra Approach}
+            
+            The committee argues that $\M{T}$ with respect to our above basis is the matrix
+            \[
+                \M{T} = \begin{bmatrix}
+                    -1 & 0 \\
+                    0  & I_{n-1}
+                \end{bmatrix}
+            \]
+
+            This is a consequence of our equations where we apply $T$ to $u$ and $u_2,\dots,u_n$. And then the
+            determinant of this matrix is $-1*1^{n-1} = -1$. And since we have that the determinant of a matrix
+            is invariant under similarity transformations (change of basis matrices and a standard result in 
+            many undergraduate linear algebra courses) we have that the determinant of $\M{T}$ under any 
+            basis is $-1$ as desired.
+
+            \secName{Axler-esque Approach}
+
+            In Axler the determinant of an operator $T$ is defined as follows
+            \begin{defin}
+                Suppose $T\in\L{V}$.
+                \begin{itemize}
+                    \item If $\F = \C$, then the determinant of $T$ is the product of the eigenvalues of $T$,
+                        with each eigenvalue repeated according to its multiplicity
+                    \item If $\F = \R$, then the determinant of $T$ is the product of the eigenvalues of $T_\C$,
+                        with each eigenvalue repeated according to its multiplicity
+                \end{itemize}
+            \end{defin}
+            Where $T_\C$ is the complexification of $T$. Essentially this just means that we allow complex 
+            eigenvalues if our operator happened to have them. (But this isn't relevant here, as we will 
+            show shortly)
+
+            We showed in the previous part that $V$ has an orthonormal basis consisting of eigenvectors of $T$. 
+            $u,u_2,\dots,u_n$ are eigenvectors where $u$ is associated with eigenvalue $-1$ and 
+            $u_2,\dots,u_n$ are associated with the eigenvalue $1$. This means that $T$ is diagonalizable 
+            according to the Real Spectral Theorem. The eigenspace associated with $-1$ has dimension $1$ 
+            while the eigenspace associated with $1$ has dimension $n-1$ as we have $n-1$ linearly independent
+            vectors living in this space. This means from our above definition,
+            \[
+                \det T = -1*1^{n-1} = -1
+            \]
+            Since the determinant is a property of the operator and not the matrix representation of the 
+            operator (according to Axler and formalized with Theorem 10.42) we know that for any matrix 
+            representation of $T$, denoted $A$,
+            we have that $\det A = \det T = -1$ as desired.
+            
+            \secName{Solution}
+
+            (I am only writing up the Axler-esque approach, but the above Matrix Algebra Approach would be 
+            sufficient if this approach made more sense to you.)
+
+
+            Since we have that $u,u_2,\dots,u_n$ is an orthonormal basis of $V$ and 
+            \begin{align*}
+                T(u) &= u - 2\ip{u,u}u = -u \\
+                T(u_k) &= u_k - 2\ip{u_k,u}u = u_k \qquad\qquad \text{for }k=2,\dots,n
+            \end{align*}
+            we have that $u$ is an eigenvector of $T$ with associated eigenvalue of $-1$, and 
+            $u_2,\dots,u_n$ are $n-1$ linearly independent eigenvectors of $T$ associated with the 
+            eigenvalue $1$. Since the eigenspace associated with $-1$ is of dimension $1$ and the eigenspace
+            associated with $1$ is of dimension $n-1$, we have that by the definition of the determinant 
+            \[
+                \det T = -1*1^{n-1} = -1
+            \]
+            
+            So by Theorem 10.42, for any matrix representation of $T$, denoted $A$, is given by
+            \[
+                \det A = \det T = -1
+            \]
+            as desired.
+        \end{solution}
+        \part If $S\in\L{V}$ is an isometry with $1$ as an eigenvalue, and if the eigenspace of $1$ is of 
+        dimension $n-1$, then there exists some $w\in V$ where $w$ is a unit vector and for all $x\in V$:
+        \[
+            S(x) = x - 2\ip{x,w}w
+        \]
+        \begin{solution}
+            
+            (Note: we are using $*$ to denote the adjoint here. Since we are in a real vector space, this is 
+            equivalent to just the transpose).
+
+            \secName{Intuition} We will probably want to follow a similar path as above since this would allow us
+            to "reuse" some of our intuition that we have built up so far. So, we will first consider the 
+            eigenspace associated with $1$. Let $v_1,\dots,v_{n-1}$ be an orthonormal basis of $E(1,S)$. Next, 
+            we want to be able to use the fact that $S$ is an isometry. From Axler 7.42 (see above intuition 
+            section) we know that since $S$ is an isometry, we have $SS^* = I$. So, we would need this to hold
+            for any matrix representation. For matrix representations, we need to have a basis, so we extend
+            $v_1,\dots,v_{n-1}$ to a basis of $V$ denoted $v_1,\dots, v_{n-1}, v_n$ (Note: Without Loss of 
+            Generality, assume that $v_n$ is a unit vector). We will want to show that
+            $v_n$ is an eigenvector associated with $-1$. 
+
+            Let's write out what this matrix representation looks 
+            like with respect to this basis. (Note: we don't know anything about $v_n$ yet!)
+
+            \[
+                A = \M{S,(v_1,\dots,v_n)} = \begin{bmatrix}
+                    1 & 0 & \dots & a_{1n} \\
+                    0 & 1 & \dots & a_{2n} \\
+                    \vdots &\vdots&\ddots & \vdots \\
+                    0 & 0 & \dots & a_{nn}
+                \end{bmatrix}
+            \]
+            We know the first $n-1$ columns of $A$ are the identity matrix as the vectors $v_1,\dots,v_{n-1}$
+            are eigenvectors associated with $1$. So, let's compute $SS^*$. (As this is a pain in \latex, I am
+            going to do block multiplication for the first part. If anything is confusing, I will happily 
+            clarify).
+
+            See that $\M{S^*,(v_1,\dots,v_n)} = A^*$, so we need to just compute $AA^*$.
+
+            Let $b$ be the first $n-1$ rows of the $n^\text{th}$ column of $A$ (This will make writing $A$ as a
+            block matrix much easier in the first couple steps. We will use the actual entries of $A$ before
+            we make any real computations though!).
+
+            \begin{align*}
+                I_n = AA^* &= \begin{bmatrix}
+                    1 & 0 & \dots & a_{1n} \\
+                    0 & 1 & \dots & a_{2n} \\
+                    \vdots &\vdots&\ddots & \vdots \\
+                    0 & 0 & \dots & a_{nn}
+                \end{bmatrix}\begin{bmatrix}
+                    1 & 0 & \dots & 0 \\
+                    0 & 1 & \dots & 0 \\
+                    \vdots & \vdots & \ddots & \vdots \\
+                    a_{1n} & a_{2n} & \dots & a_{nn}
+                \end{bmatrix} \\
+                &= \begin{bmatrix}
+                    I_{n-1} & b \\
+                    \vec{0} & a_{nn}
+                \end{bmatrix}\begin{bmatrix}
+                    I_{n-1} & \vec{0} \\
+                    {b}^\top & {a_{nn}}
+                \end{bmatrix} \\
+                &= \begin{bmatrix} I_{n-1} \\ \vec{0} \end{bmatrix} 
+                   \begin{bmatrix} I_{n-1} & \vec{0} \end{bmatrix} + 
+                   \begin{bmatrix} a_{1n}\\\vdots\\a_{nn} \end{bmatrix}
+                       \begin{bmatrix} {a_{1n}}&\dots&{a_{nn}}\end{bmatrix}\\
+                &= \begin{bmatrix} I_{n-1} & \vec{0} \\
+                    \vec{0} & 0\end{bmatrix} + 
+                    \begin{bmatrix}
+                        a_{1n}{a_{1n}} & a_{1n}{a_{2n}} & \dots & a_{1n}{a_{nn}} \\
+                        a_{2n}{a_{1n}} & a_{2n}{a_{2n}} & \dots & a_{2n}{a_{nn}} \\
+                        \vdots & \vdots &\ddots & \vdots \\
+                        a_{nn}{a_{1n}} & a_{nn}{a_{2n}} & \dots & a_{nn}{a_{nn}} 
+                    \end{bmatrix} \\
+                &= \begin{bmatrix} I_{n-1} & \vec{0} \\
+                    \vec{0} & 0\end{bmatrix} + 
+                    \begin{bmatrix}
+                        {a_{1n}}^2 & a_{1n}{a_{2n}} & \dots & a_{1n}{a_{nn}} \\
+                        a_{2n}{a_{1n}} & {a_{2n}}^2 & \dots & a_{2n}{a_{nn}} \\
+                        \vdots & \vdots &\ddots & \vdots \\
+                        a_{nn}{a_{1n}} & a_{nn}{a_{2n}} & \dots & {a_{nn}}^2 
+                    \end{bmatrix}
+            \end{align*}
+            Now, the first matrix in our sum has $1's$ on the diagonal of the first $n-1$ columns and $0's$ 
+            elsewhere. So in order for out final matrix to be the identity, we need the following $n$ equations to
+            hold (we'll worry about off diagonals afterward for the second matrix in our sum).
+            \begin{align*}
+                {a_{1n}}^2 &= 0 \\
+                &\vdots\\
+                {a_{(n-1)n}}^2 &= 0 \\
+                {a_{nn}}^2 &= 1
+            \end{align*}
+            The first $n-1$ equations give us that for $k=1,\dots,n-1$,
+            \[
+                a_{kn} = 0
+            \]
+
+            (Note: This means that the off diagonals of our second matrix in the above sum must be $0$ as needed)
+
+            And the final equation gives us that
+            \[
+                a_{nn} = \pm 1
+            \]
+
+            However, we know that if $a_{nn} = 1$, then we would have that $v_n$ satisfies $Sv_n = v_n$, which
+            is not possible because we would have $n$ linearly independent eigenvectors associated with $1$ which
+            violates our assumption that $\dim E(S,1) = n-1$. So, we know $a_{nn} = -1$. 
+
+            This means that for our basis vectors, we have
+            \begin{align*}
+                Sv_1 &= v_1 \\
+                     &\vdots\\
+                Sv_{n-1}&= v_{n-1}\\
+                Sv_n &= -v_n
+            \end{align*}
+            Next, we show that if we assign $w=v_n$, then the desired equation satisfies the above behavior on 
+            these basis vectors (which would allow us to conclude that $S(x) = x - 2\ip{x,v_n}v_n$ for all
+            $x\in V$).
+
+
+            See that for $k=1,\dots,n$, 
+            \[
+                v_k - 2\ip{v_k,v_n}v_n = v_k = S(v_k)
+            \]
+            The first equation is because from Axler 7.22 (as $S$ is diagonalizable, it is clearly Normal) 
+            eigenvectors associated with distict eigenvalues are orthogonal. Finally see that
+
+            \[
+                v_n - 2\ip{v_n,v_n}v_n = v_n - 2v_n = -v_n = S(v_n)
+            \]
+
+            So since our equation holds for all basis vectors, it must also hold for all $x\in V$. Thus, we have
+            shown that there exists $w\in V$ such that for all $x\in V$, $S(x) = x - 2\ip{x,w}w$ as desired.
+            
+            \secName{Solution}
+
+            Let $(v_1,\dots,v_{n-1}$ denote an orthonormal basis of $E(S,1)$. We know that such a basis exists
+            because we are assuming that $\dim E(S,1) = n-1$. Next, extend this basis to a basis of $V$. Denote
+            this $v_1,\dots,v_{n-1},v_n$. Without loss of generality, assume that $\norm{v_n}{} = 1$. We will
+            now show that $v_n$ is an eigenvector associated with eigenvalue $-1$.
+
+            See that the matrix representation of $S$ with respect to this matrix is given by
+            \[
+                A = \M{S,(v_1,\dots,v_n)} = \begin{bmatrix}
+                    1 & 0 & \dots & a_{1n} \\
+                    0 & 1 & \dots & a_{2n} \\
+                    \vdots &\vdots&\ddots & \vdots \\
+                    0 & 0 & \dots & a_{nn}
+                \end{bmatrix}
+            \]
+            We write the final column this way as we don't yet know how $v_n$ relates to the other vectors.
+            Since $S$ is an isometry, Axler 7.42 gives us that $SS^* = I$ where $I$ is the 
+            identity operator on $V$. So, we know that $AA^* = I_n$ where $I_n$ is the $n$-by-$n$ identity matrix.
+            For ease of notation, let $b = \begin{bmatrix}a_{1n}&\dots&a_{(n-1)n}\end{bmatrix}^\top$
+
+            This means
+            \begin{align*}
+                I_n = AA^* &= \begin{bmatrix}
+                    1 & 0 & \dots & a_{1n} \\
+                    0 & 1 & \dots & a_{2n} \\
+                    \vdots &\vdots&\ddots & \vdots \\
+                    0 & 0 & \dots & a_{nn}
+                \end{bmatrix}\begin{bmatrix}
+                    1 & 0 & \dots & 0 \\
+                    0 & 1 & \dots & 0 \\
+                    \vdots & \vdots & \ddots & \vdots \\
+                    a_{1n} & a_{2n} & \dots & a_{nn}
+                \end{bmatrix} \\
+                &= \begin{bmatrix}
+                    I_{n-1} & b \\
+                    \vec{0} & a_{nn}
+                \end{bmatrix}\begin{bmatrix}
+                    I_{n-1} & \vec{0} \\
+                    {b}^\top & {a_{nn}}
+                \end{bmatrix} \\
+                &= \begin{bmatrix} I_{n-1} \\ \vec{0} \end{bmatrix} 
+                   \begin{bmatrix} I_{n-1} & \vec{0} \end{bmatrix} + 
+                   \begin{bmatrix} a_{1n}\\\vdots\\a_{nn} \end{bmatrix}
+                       \begin{bmatrix} {a_{1n}}&\dots&{a_{nn}}\end{bmatrix}\\
+                &= \begin{bmatrix} I_{n-1} & \vec{0} \\
+                    \vec{0} & 0\end{bmatrix} + 
+                    \begin{bmatrix}
+                        a_{1n}{a_{1n}} & a_{1n}{a_{2n}} & \dots & a_{1n}{a_{nn}} \\
+                        a_{2n}{a_{1n}} & a_{2n}{a_{2n}} & \dots & a_{2n}{a_{nn}} \\
+                        \vdots & \vdots &\ddots & \vdots \\
+                        a_{nn}{a_{1n}} & a_{nn}{a_{2n}} & \dots & a_{nn}{a_{nn}} 
+                    \end{bmatrix} \\
+                &= \begin{bmatrix} I_{n-1} & \vec{0} \\
+                    \vec{0} & 0\end{bmatrix} + 
+                    \begin{bmatrix}
+                        {a_{1n}}^2 & a_{1n}{a_{2n}} & \dots & a_{1n}{a_{nn}} \\
+                        a_{2n}{a_{1n}} & {a_{2n}}^2 & \dots & a_{2n}{a_{nn}} \\
+                        \vdots & \vdots &\ddots & \vdots \\
+                        a_{nn}{a_{1n}} & a_{nn}{a_{2n}} & \dots & {a_{nn}}^2 
+                    \end{bmatrix}
+            \end{align*}
+
+            Since we need these two matrices to sum to be $I_n$, we need the following $n$ equations to hold, 
+            which we get from ensuring the diagonal elements are correct in the final sum.
+            \begin{align*}
+                {a_{1n}}^2 &= 0 \\
+                &\vdots\\
+                {a_{(n-1)n}}^2 &= 0 \\
+                {a_{nn}}^2 &= 1
+            \end{align*}
+            The first $n-1$ equations give us that for $k=1,\dots,n-1$,
+            \[
+                a_{kn} = 0
+            \]
+
+            (Note: This means that the off diagonals of our second matrix in the above sum must be $0$ as needed)
+
+            And the final equation gives us that
+            \[
+                a_{nn} = \pm 1
+            \]
+
+            However, we know that if $a_{nn} = 1$, then we would have that $v_n$ satisfies $Sv_n = v_n$, which
+            is not possible because we would have $n$ linearly independent eigenvectors associated with $1$ which
+            violates our assumption that $\dim E(S,1) = n-1$. So, we know $a_{nn} = -1$. 
+
+            Next, see that
+            \begin{align*}
+                Sv_1 &= v_1 \\
+                     &\vdots\\
+                Sv_{n-1}&= v_{n-1}\\
+                Sv_n &= -v_n
+            \end{align*}
+            Next, we show that if we assign $w=v_n$, then the desired equation satisfies the above behavior on 
+            these basis vectors (which would allow us to conclude that $S(x) = x - 2\ip{x,v_n}v_n$ for all
+            $x\in V$).
+
+
+            See that for $k=1,\dots,n$, 
+            \[
+                v_k - 2\ip{v_k,v_n}v_n = v_k = S(v_k)
+            \]
+            The first equation is because from Axler 7.22 (as $S$ is diagonalizable, it is clearly Normal) 
+            eigenvectors associated with distict eigenvalues are orthogonal. Finally see that
+
+            \[
+                v_n - 2\ip{v_n,v_n}v_n = v_n - 2v_n = -v_n = S(v_n)
+            \]
+
+            So since our equation holds for all basis vectors, it must also hold for all $x\in V$. Thus, we have
+            shown that there exists $w\in V$ such that $w$ is a unit vector and  
+            for all $x\in V$, $S(x) = x - 2\ip{x,w}w$ as desired.
+
+        \end{solution}
+    \end{parts}
+    \question Let $V$ be a finite dimensional real vector space with basis $e_1,\dots,e_n$ (the standard basis of
+    $\R^n$)
+    \begin{parts}
+        \part Let $A$ be a positive definite bijective matrix in $V$ (This means $A$ is a matrix representation 
+        of some invertible linear operator in $\L{V}$). For any $v,w\in V$, expressed as coordinate vectors according to 
+        this basis (their standard
+        representation if you were to write them down), define 
+        \[
+            \ip{v,w} := v^\top Aw.
+        \]
+        Show that this is an inner product.
+        \begin{solution}
+            
+            \secName{Intuition}
+            This is a computational part. Just need to show the following properties are satisfied
+            \begin{defin} Inner Product Axler 6.3
+                An operation $\ip{\cdot,\cdot}:V\times V \rightarrow \F$ is an inner product if the
+                following are satisfied.
+                \begin{enumerate}
+                    \item Positivity\\
+                        For all $v\in V$, $\ip{v,v} \geq 0$
+                    \item Definiteness\\
+                        $\ip{v,v} = 0 \iff v=0$
+                    \item Additivity in the first slot\\
+                        for all $u,v,w\in V$, we have $\ip{u+v,w} = \ip{u,w} + \ip{v,w}$
+                    \item Homogeneity in the first slot\\
+                        For all $\lambda\in\F, u,v\in V$, we have $\ip{\lambda u,v} = \lambda\ip{u,v}$
+                    \item Conjugate symmetry\\
+                        For all $u,v\in V$, we have $\ip{u,v} = \overline{\ip{v,u}}$
+                \end{enumerate}
+            \end{defin}
+            However, since we are in a real space, we can show this with only $\F=\R$
+
+            How we would do this is just directly using the given properties of $A$
+
+            \secName{Solution}
+
+            First, we show positivity. Let $v\in V$. See that 
+            \begin{align*}
+                \ip{v,v} &= v^\top Av \\
+                &\geq 0
+            \end{align*}
+            Since $A$ is positive.
+
+            Next, we show definiteness. Assume that $v=0$. See that
+            \[
+                \ip{v,v} = v^\top Av = \vec{0}^\top A\vec{0} = 0
+            \]
+            Now, let $v\in V$ such that $\ip{v,v} = 0$. This means
+            \[
+                0 = v^\top Av
+            \]
+            However, since $A$ is positive definite, $v$ must be $0$. Therefore, $\ip{v,v} = 0 \iff v=0$ as 
+            desired.
+
+            Next, we show additivity in the first slot. Let $u,v,w\in V$. See that:
+            \begin{align*}
+                \ip{u + v,w} &= (u + v)^\top Aw \\
+                &= (u^\top + v^\top )Aw \\
+                &= u^\top Aw + v^\top Aw \\
+                &= \ip{u,w} + \ip{v,w}
+            \end{align*}
+            As desired.
+
+            Next, we show homogeneity in the first slot. Let $\lambda\in\R$ and $u,v\in V$. See that
+            \begin{align*}
+                \ip{\lambda u,v} &= (\lambda u)^\top Av \\
+                &= \lambda u^\top Av \\
+                &= \lambda \ip{u,v} 
+            \end{align*}
+            As desired.
+
+            Finally, we show conjugate symmetry (Since we are in $\R$, we instead show symmetry). 
+            Let $u,v\in V$. See that
+            \begin{align*}
+                \ip{u,v} &= u^\top Av \\
+                &= (u^\top Av)^\top \qquad\qquad \text{Since this is a scalar}\\
+                &= v^\top A^\top u \\
+                &= v^\top Au\qquad\qquad \text{Since $A$ is symmetric due to being positive}\\
+                &= \ip{v,u}
+            \end{align*}
+
+            Thus, we have shown that this function is an inner product as desired.
+        \end{solution}
+        \part Let $\ip{\cdot,\cdot}$ be an inner product in $V$. Define $A$ to be a matrix such that 
+        $A_{ij} = \ip{e_i,e_j}$ is a positive bijective matrix such that $\ip{v,w} = v^\top Aw$.
+        \begin{solution}
+
+            The idea behind this problem is that if we compute the inner product of all possible combinations 
+            of basis vectors, and store them in a matrix (Where the index of the ``first'' basis vector gives
+            the row and the index of the ``second'' gives the column). Then for any pair of vectors in our vector
+            space we can instead compute the above mentioned matrix vector product. As far as usefulness, this
+            could potentially be useful in cases where computing the inner product is expensive to do (or in 
+            an even more ideal situation, cheap for the basis vectors) and we want to compute a lot of inner 
+            products.
+
+            This problem has two steps. First is to show that $A$ is positive definite and invertible and the
+            second is to show that if we define $A$ to be this way, then we know that $\ip{v,w}=v^\top Aw$.
+            This essentially means that we can write an inner product in this space as the matrix vector 
+            multiplication instead.
+
+            \secName{Intuition}
+            Assuming that we show $\ip{v,w} = v^\top Aw$, then the needed properties of $A$ (positive definite
+            and bijective) are nearly immediate consequences. So let $v,w\in V$, See that in the problem statement
+            we write these vectors as coordinates in our giving basis. This means
+            \begin{align*}
+                v &= \sum_{k=1}^n v_ke_k \\
+                w &= \sum_{k=1}^n w_ke_k
+            \end{align*}
+            So, we have that 
+            \begin{align*}
+                \ip{v,w} &= \ip{\sum_{i=1}^n v_ie_i,\sum_{j=1}^n w_je_j} \\
+                &= \sum_{i=1}^n\ip{v_ie_i,\sum_{j=1}^n w_je_j} \\
+                &= \sum_{i=1}^n\sum_{j=1}^n\ip{v_ie_i,w_je_j} \\
+                &= \sum_{i=1}^n\sum_{j=1}^nv_iw_j\ip{e_i,e_j} \\
+                &= \sum_{i=1}^n\sum_{j=1}^nv_iw_jA_{ij}
+            \end{align*}
+            Next we will show that $v^\top Aw$ looks the same.
+
+            \begin{align*}
+                v^\top Aw &= v^\top \begin{bmatrix}
+                    \sum_{j=1}^nA_{1j}w_j \\
+                    \vdots \\
+                    \sum_{j=1}^nA_{nj}w_j 
+                \end{bmatrix} \\
+                &= \begin{bmatrix} v_1 & \dots & v_n \end{bmatrix}\begin{bmatrix}
+                    \sum_{j=1}^nA_{1j}w_j \\
+                    \vdots \\
+                    \sum_{j=1}^nA_{nj}w_j 
+                \end{bmatrix} \\
+                &= \sum_{i=1}^n v_i\sum_{j=1}^n A_{ij}w_j \\
+                &= \sum_{i=1}^n \sum_{j=1}^n v_iw_j A_{ij}
+            \end{align*}
+
+            Which is the same as $\ip{v,w}$. Thus we have that for all $v,w\in V$, $\ip{v,w} = v^\top Aw$.
+
+            Now all that is left to show is that $A$ is positive definite and invertible. For positive, let $v\in V$. Then, $v^\top Av = \ip{v,v} \geq 0$.
+
+            For definiteness, let $v\in V$ such that $v^\top Av = 0$. See that
+            \[
+                0 = v^\top Av = \ip{v,v} \iff v = \vec{0}.
+            \]
+            Thus, $A$ is positive definite. Now for invertability. We will do this by showing the nullspace
+            is trivial. IE let $v\in V$ such that $Av = \vec{0}$. This tells us
+            \[
+                Av = \vec{0} \iff v^\top Av = v^\top\vec{0} = 0
+            \]
+            However recall that $v^\top Av = \ip{v,v}$ which is only $0$ when $v = \vec{0}$. Thus, the only
+            vector in the nullspace of $A$ is the zero vector. Thus, it is invertible as $V$ is a finite vector
+            space.
+
+            \secName{Solution}
+            First, we will show that for all $v,w\in V$, we have that $\ip{v,w} = v^\top Aw$. We will do this 
+            by expanding both sides to the same form, which will let us conclude that $\ip{v,w}=v^\top Aw$.
+            See first that 
+            \begin{align*}
+                \ip{v,w} &= \ip{\sum_{i=1}^n v_ie_i,\sum_{j=1}^n w_je_j} \\
+                &= \sum_{i=1}^n\ip{v_ie_i,\sum_{j=1}^n w_je_j} \\
+                &= \sum_{i=1}^n\sum_{j=1}^n\ip{v_ie_i,w_je_j} \\
+                &= \sum_{i=1}^n\sum_{j=1}^nv_iw_j\ip{e_i,e_j} \\
+                &= \sum_{i=1}^n\sum_{j=1}^nv_iw_jA_{ij}
+            \end{align*}
+            Next see:
+            \begin{align*}
+                v^\top Aw &= v^\top \begin{bmatrix}
+                    \sum_{j=1}^nA_{1j}w_j \\
+                    \vdots \\
+                    \sum_{j=1}^nA_{nj}w_j 
+                \end{bmatrix} \\
+                &= \begin{bmatrix} v_1 & \dots & v_n \end{bmatrix}\begin{bmatrix}
+                    \sum_{j=1}^nA_{1j}w_j \\
+                    \vdots \\
+                    \sum_{j=1}^nA_{nj}w_j 
+                \end{bmatrix} \\
+                &= \sum_{i=1}^n v_i\sum_{j=1}^n A_{ij}w_j \\
+                &= \sum_{i=1}^n \sum_{j=1}^n v_iw_j A_{ij}
+            \end{align*}
+            Which is the same as $\ip{v,w}$. Thus we have that for all $v,w\in V$, $\ip{v,w} = v^\top Aw$. Now,
+            we need only show that $A$ is positive definite and invertible. First positivity.
+
+            Let $v\in V$. We have, by above, 
+            \[
+                v^\top Av = \ip{v,v} \geq 0
+            \]
+            Next, definiteness. Let $v\in V$ such that $v^\top Av = 0$. See that
+            \[
+                0 = v^\top Av = \ip{v,v} \iff v = \vec{0}.
+            \]
+            We also show the other direction. Let $v=\vec{0}$, we have
+            \[
+                v^\top Av = \vec{0}^\top A\vec{0} = 0
+            \]
+
+            Finally we show that $A$ is invertible. We will do this by showing the nullspace
+            is trivial. IE let $v\in V$ such that $Av = \vec{0}$. This tells us
+            \[
+                Av = \vec{0} \iff v^\top Av = v^\top\vec{0} = 0
+            \]
+            However recall that $v^\top Av = \ip{v,v}$ which is only $0$ when $v = \vec{0}$. Thus, the only
+            vector in the nullspace of $A$ is the zero vector. Thus, it is invertible as $V$ is a finite vector
+            space.
+
+        \end{solution}
+    \end{parts}
+    \question $V$ be a finite-dimensional inner product space over $\C$. Let $T$ be a normal operator
+    on $V$. Let $\lambda\in\C$ and let $v\in V$ be a unit vector (ie $\norm{v}{} = 1$). Prove that $T$ has an
+    eigenvalue $\lambda'$ such that 
+    \[
+        \norm{\lambda - \lambda'}{} \leq \norm{Tv - \lambda v}{}.
+    \]
+    \begin{solution}
+        
+        \secName{Intuition} Since we know nothing about $T$ other than it is normal. So we use the one thing
+        that has not failed us yet (eigenvector basis!). 
+
+        \secName{Solution}
+
+        Since $T$ is normal, the complex spectral theorem
+        gives us that there exists an orthonormal basis consisting of eigenvectors of $T$. Denote this basis
+        $(v_1,\dots,v_n)$ with associated eigenvectors $\lambda_1,\dots,\lambda_n$.
+
+        Next since we have a basis, we know that there exist some $a_1,\dots,a_n\in\C$ such that
+        \[
+            v = \sum_{k=1}^n a_kv_k
+        \]
+        Finally, we see that
+        \begin{align*}
+            \norm{Tv - \lambda v}{}^2 &= \norm{T\left(\sum_{k=1}^n a_kv_k\right) - \lambda\left(\sum_{k=1}^n a_kv_k\right)}{}^2 \\
+            &= \norm{\sum_{k=1}^n a_kTv_k - a_k\lambda v_k}{}^2 \\
+            &= \norm{\sum_{k=1}^n (\lambda_k - \lambda)a_kv_k}{}^2 \\
+            &= \sum_{k=1}^n\abs{\lambda_k -\lambda}^2\abs{a_k}^2 \qquad\text{Axler 6.25} \\
+            &\geq \sum_{k=1}^n \min_{\ell\in\{1,\dots,n\}}\abs{\lambda_\ell - \lambda}^2\abs{a_k}^2 \\
+            &= \min_{\ell\in\{1,\dots,n\}}\abs{\lambda_\ell - \lambda}^2\sum_{k=1}^n\abs{a_k}^2\\
+            &= \min_{\ell\in\{1,\dots,n\}}\abs{\lambda_\ell - \lambda}^2\norm{v}{}^2\qquad\text{Axler 6.25} \\
+            &= \min_{\ell\in\{1,\dots,n\}}\abs{\lambda_\ell - \lambda}^2\qquad\text{$v$ is a unit vector} \\
+            &= \abs{\lambda_j - \lambda}^2.\\
+            &= \norm{\lambda_j - \lambda}{}^2
+        \end{align*}
+        The $j$ in the final equation is given by $j = \arg\min_{\ell\in\{1,\dots,n\}}\abs{\lambda_\ell - \lambda}^2$. 
+        Finally, we redo some variable names and take the square root of both sides to get it in the form of 
+        the problem statement.
+
+        Define $\lambda' = \lambda_j$ and we finally have that
+        \[
+            \norm{\lambda - \lambda'}{} \leq \norm{Tv - \lambda v}{}
+        \]
+        as desired.
+
+    \end{solution}
 \end{questions}
 
 \section{Axler Problems}
 \begin{questions}
+    \question Suppose $\ip{\cdot,\cdot}_1$ and $\ip{\cdot,\cdot}_2$ are inner products on $V$ over a field
+    $\F$ such that for all 
+    $u,v\in V$, $\ip{u,v}_1 = 0 \iff \ip{u,v}_2=0$. Prove that there is a positive number $c$ such that 
+    $\ip{u,v}_1 = c\ip{u,v}$ for all $u,v\in V$.
+    \begin{solution}
+
+        \secName{Preamble}
+
+        This problem is a bit difficult to do, and while not exactly in the syllabus of the Prelim (which is 
+        why we didn't talk about it in our sessions) but seeing how a linear function can be used may be 
+        informative and give some experience using unfamiliar concepts. This should be used as a guideline for
+        how a proof would look (with explainations too). 
+        So, we will skip the intuition section and instead only do the more proper solution
+        writeup.
+
+        This proof is a slightly modified version of the one provided by Axler. (want to be clear about credit 
+        for it).
+
+        \secName{Solution}
+
+        Let $w\in V$ such that $w\neq\vec{0}$. Define the linear functionals 
+        $\phi\,:\,V\rightarrow\F$ and $\psi\,:\,V\rightarrow\F$ as for all $v\in V$:
+        \begin{align*}
+            \phi(v) &= \ip{v,w}_1 \\
+            \psi(v) &= \ip{v,w}_2
+        \end{align*}
+        From the problem statement, we know that $\nullS{\phi} = \nullS{\psi}$. Recall that $\phi$ and $\psi$
+        are elements of the dual space $V'$. So we can talk about their spans as they are vectors themselves.
+        Next, we also know that:
+        \[
+            \spanS{\phi} = \left(\nullS{\phi}\right)^0 = \left(\nullS{\psi}\right)^0 = \spanS{psi}
+        \]
+        This equation comes from the fundamental theorem of linear algebra (or linear maps) along with the 
+        definition of the annihilator of a space. Since the spans of these functionals are the same, and they
+        are singular vectors, we have that there exists some $c_w\in\F$ such that 
+        \[
+            \phi = c_w\psi
+        \]
+        Note: the subscript $w$ denotes the potential reliance on the chosen $w$.
+        Now, we will show that $c_w\in\R$ and $c_w > 0$. Since above holds for all $v\in V$, we know it also works for $w$. See
+        \[
+            \phi(w) = c_w\psi(w) \implies \ip{w,w}_1 = c_w\ip{w,w}_2 \implies \norm{w}{1}^2 = c_w\norm{w}{2}^2.
+        \]
+        Where $\norm{\cdot}{1}$ denotes the norm induced by the inner product $\ip{\cdot,\cdot}_1$ and 
+        $\norm{\cdot}{2}$ denotes the norm induced by the inner product $\ip{\cdot,\cdot}_2$. Since these
+        are norms and $w\neq0$, the left hand side of our final equation is a real positive number, and 
+        the norm on the right side is $c_w$ multiplied by a real non-negative number. Thus, we have that $c_w$
+        must be both real and positive.
+
+        Next, we show that $c_w$ is independent of our choice of $w$ so we can rename it to be $c$.
+        Let $w,x\in V$ and $c_w,c_x\in\R$ such that for all $v\in V$ we have:
+        \begin{align}
+            \ip{v,w}_1 &= c_w\ip{v,w}_2 \label{eq:w}\\
+            \ip{v,x}_1 &= c_x\ip{v,x}_2 \label{eq:x}
+        \end{align}
+        We will now show that $c_w = c_x$. Since the above works for all $v\in V$, plug in $x$ into \eqref{eq:w}
+        and $w$ into \eqref{eq:x}. See that this gives us both
+        \begin{align*}
+            \ip{x,w}_1 &= c_w\ip{x,w}_2 \\
+            \ip{w,x}_1 &= c_x\ip{w,x}_2
+        \end{align*}
+        We can use the conjugate symmetry property of $\ip{\cdot,\cdot}_1$ to get that
+        \[
+            \overline{\ip{x,w}}_1 = \ip{w,x}_1 = c_x\ip{w,x}_2
+        \]
+        which we can take the conjugate of the far left and far right sides to give us
+        \[
+            \ip{x,w}_1 = \overline{c_x\ip{w,x}}_2 = c_x\overline{\ip{w,x}}_2
+        \]
+        Putting all this together lets us simplify to
+        \begin{align*}
+            c_w\ip{x,w}_2 &= \ip{x,w}_1 \\
+            &= c_x\overline{\ip{w,x}}_2 \\
+            &= c_x\ip{x,w}_2
+        \end{align*}
+
+        So, we have that $c_w\ip{x,w}_2 = c_x\ip{x,w}_2$. Since the inner product is a function, we have that
+        $c_w = c_x$. So the choice of $c_w$ is independent of the choice of vector in our previous linear 
+        functional, so we drop the subscript and are left with a $c\in\R$ such that $c>0$ and for all $u,v\in V$
+        we have
+        \[
+            \ip{u,v}_1 = c\ip{u,v}_2
+        \]
+        as desired.
+    \end{solution}
+    \question Suppose $e_1,\dots,e_m$ is an orthonormal list of vectors in $V$. Let $v\in V$. Prove that
+    \[
+        \norm{v}{}^2 = |\ip{v,e_1}|^2 + \cdots + |\ip{v,e_m}|^2
+    \]
+    if and only if $v\in\text{span}\left({e_1,\dots,e_m}\right)$.
+    \begin{solution}
+
+        \secName{Intuition} This is asking us to prove a little stronger version of Axler 6.25 and 6.30. While the
+        wording is slightly different, it is similar in at least the backwards direction.
+    \end{solution}
 \end{questions}
 
-\section{Other Problems}
+%\section{Other Problems}
 \end{document}

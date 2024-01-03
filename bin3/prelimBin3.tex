@@ -16,14 +16,129 @@
 
 \begin{document}
 \maketitle
-This document holds problems that fit into the Bin 4 according to the prelim syllabus. Or are approached 
+This document holds problems that fit into the Bin 3 according to the prelim syllabus. Or are approached 
 in a way most compatible with Bin 3
 
 \tableofcontents
 
 \section{Prelim Problems}
 \begin{questions}
-    \question Let $A$ be a Hermitian $n\times n$ complex matrix . Show that if 
+    \question Let $A$ be a Hermitian $n\times n$ complex matrix. Show that if $\ip{Av,v}\geq 0$ for all
+    $v\in\C^n$, then there exists an $n\times n$ matrix $T$ such that $A=T^*T$.
+    \begin{solution}
+        
+        \secName{Intuition} As is a pattern so far for most of these problems, we want to use the fact that
+        $A$ is diagonalizable. Since we are speaking in terms of matrices, we will use that flavor of
+        diagonalizability. Since $A$ is Hermitian, the Complex Spectral Theorem guarantees that we have an 
+        orthonormal list of vectors, denoted $v_1,\dots,v_n$ with $n$
+        not necessarily unique elements of $\C$ denoted $\lambda_1,\dots,\lambda_n$ such that:
+        \begin{align*}
+            Av_1 &= \lambda_1v_1 \\
+                 &\vdots\\
+            Av_n &= \lambda_nv_n
+        \end{align*}
+        However since $A$ is hermitian (self-adjoint in Axler's terms) we know from Axler 7.13 that the 
+        eigenvalues, $\lambda_1,\dots,\lambda_n$ are actually real! (This is needed to ensure uniquenss of 
+        the $T$ we find, but this problem does require us to show it is unique)
+
+        Another way to view this is as 
+        \[
+            A = VDV^*
+        \]
+        Where $V$ is a matrix whose columns are the eigenvectors of $A$ and $D$ is a diagonal matrix with the
+        eigenvalues of $A$ on the diagonal. So if we can construct a second matrix $S = \sqrt{D}$, then we can
+        define our desired matrix as 
+        \[
+            T = VSV^*
+        \]
+        Then we would have
+        \[
+            T^*T = VSV^*VSV^* = VS^2V^* = VDV^*=A
+        \]
+
+        So, let's define $S$ to be the matrix as:
+        \[
+            S_{ij} = \begin{cases}
+                \sqrt{\lambda_i} & \text{ if }i=j \\
+                0                & \text{ otherwise}
+            \end{cases}
+        \]
+        Notice that when we multiply two diagonal matrices, we multiply their diagonals. So
+        \[
+            S_{ij}^2 = \begin{cases}
+                \lambda_i & \text{ if }i=j \\
+                0                & \text{ otherwise}
+            \end{cases}
+        \]
+        which is the same as $D$! Now, define the matrix $T$ as follows
+        \[
+            T = VSV^*
+        \]
+        Next, we see that 
+        \begin{align*}
+            T^* &= \left(VSV^*\right)^* \\
+            &= \left(V^*\right)^*S^*V^* \\
+            &= VSV^* \\
+            &= T
+        \end{align*}
+        Finally, we have
+        \begin{align*}
+            T^*T &= T^2 \\
+            &= VSV^*VSV^*\\
+            &= VS^2V^* \\
+            &= VDV^*\\
+            &= A
+        \end{align*}
+        as desired.
+
+        \secName{Solution}
+
+        Since $A$ is hermitian, $A$ is orthogonally diagonalizable via the complex spectral theorem, and since $A$
+        is Hermitian it also has only real eigenvalues. Denote the eigenvectors with associated eigenvalues as
+        $v_1,\dots,v_n$ and $\lambda_1,\dots,\lambda_n$ respectively.
+
+        Define the matrix $V$ such that 
+        \[
+            V = \begin{bmatrix} v_1 & \dots & v_n \end{bmatrix}
+        \]
+        Also define the matrix $D$ as
+        \[
+            D_{ij} = \begin{cases} \lambda_i & \text{ if }i=j\\
+                0   & \text{ otherwise}
+            \end{cases}
+        \]
+        This means that the columns of $V$ are the eigenvectors of $A$. From $A$ being diagonalizable, we know
+        that
+        \[
+            A = VDV^*
+        \]
+
+        Next, define the matrix $S$ as 
+        \[
+            S_{ij} = \begin{cases} \sqrt{\lambda_i} & \text{ if }i=j\\
+                0   & \text{ otherwise}
+            \end{cases}
+        \]
+        (Note the above square root is the real square root).
+        
+        See that since $S$ is diagonal, it is symmetric. In addition based on our construction of $S$, we have
+        $S^2 = D$.
+
+        Finally, define the matrix $T$ as:
+        \[
+            T = VSV^*
+        \]
+
+        Now, we will show that $T^*T = A$.
+        \begin{align*}
+            T^*T &= \left(VSV^*\right)^*VSV^* \\
+            &= VS^*V^*VSV^*\\
+            &= VS^2V^*\\
+            &= VDV^* \\
+            &= A.
+        \end{align*}
+        Thus, we have shown that there exists some matrix $T$ such that $T^*T = A$ as desired.
+    \end{solution}
     \question Let $T$ be a positive operator on a complex inner product space $V$ and $S$ be an operator on $V$
     such that $ST = -TS$. Show that $ST=TS=0$.
     \begin{solution}
@@ -75,13 +190,387 @@ in a way most compatible with Bin 3
         $STv = TSv = 0$. We also know this is the case for $(v_1,\dots,v_n)$ (our basis of eigenvectors of $T$). 
         Since for all $k=1,\dots,n$, $STv_k = TSv_k = 0$, $ST=TS=0$ as desired.
     \end{solution}
+    \question \,
+
+    \begin{parts}
+        \part Let $T$ be an idempotent operator on an $n$-dimensional vector space $V$; that is $T^2 = T$, 
+        show that
+        \begin{enumerate}
+            \item $V = \range{T}\oplus\nullS{T}$.
+            \item $\trace{T} = \dim{\range{T}}$
+        \end{enumerate}
+        \begin{solution}
+            
+            \secName{Intuition}
+            For this problem, there is a bit of a trick to it that would be a little hard to spot if you are not
+            familiar with indepotent operators from a previous class. This is actually a fairly well known 
+            property of idempotent matrices/operators. The trick is to show
+            that $V = \range{T} + \nullS{T}$. We can see this by looking at the following
+            equation for any $v\in V$:
+            \[
+                v = \underbrace{Tv}_{\text{This is in the range}} + \underbrace{(v - Tv)}_{\text{We will show this
+                is in the nullspace}}
+            \]
+            The second part of the above equation is in the nullspace because see that if we apply $T$ to this
+            vector, we have
+            \begin{align*}
+                T(v-Tv) &= Tv - T^2v \\
+                &= Tv - Tv \qquad\text{ This is because $T^2 = T$}\\
+                &= 0
+            \end{align*}
+
+            So we have that any $v\in V$ can be represented as a sum of an element from the range and an element
+            from the nullspace. Now all that is left is to show that this sum is a direct sum. From Axler 1.45, we
+            need only show that $\range{T}\cap\nullS{T} = \{0\}$. So we will do just that
+
+            Let $v\in \range{T}\cap\nullS{T}$. Since $v\in\range{T}$, there exists some $u\in V$ such that 
+            $Tu = v$. Since $v\in\nullS{T}$, we have that $Tv = 0$. This gives us
+            \begin{align*}
+                0 &= Tv \\
+                &= T(Tu) \\
+                &= T^2(u) \\
+                &= Tu \\
+                &= v
+            \end{align*}
+            So $v=0$. Thus the sum of these spaces is a direct sum as required.
+
+            Next is to show that the trace of our operator is equal to the dimension of the range.
+
+            We will do this by showing $T$ has $1$ as an eigenvalue with multiplicity $\dim{\range{T}}$ and
+            $0$ as an eigenvalue with multiplicity $\dim{\nullS{T}}$, which will make up all $n$ eigenvalues 
+            that we could have for our operator.
+
+            First let $\ell = \dim{\range{T}}$ and $k=\dim{\nullS{T}}$. 
+            Let $u_1,\dots,u_\ell$ be a basis of $\range{T}$ and $v_1,\dots,v_k$ be a basis of $\nullS{T}$.
+
+            Since for $i = 1,\dots,\ell$, $u_i$ is in $\range{T}$, we know that there exists some $w_i\in V$
+            such that $Tw_i = u_i$. So we also have that
+            \begin{align*}
+                Tu_i &= T(Tw_i) \\
+                &= T^2w_i \\
+                &= Tw_i \\
+                &= u_i
+            \end{align*}
+            So that means for each $i=1,\dots,\ell$, $u_i$ is an eigenvector of $T$ associated with eigenvalue
+            $1$. Clearly since $v_1,\dots,v_k$ are a basis of the nullspace, we have that each $v_j$ is an
+            eigenvector associated with the eigenvalue $0$. So, from Axler 10.9, we have that
+            $$\trace{T} = \sum_{i=1}^\ell 1 + \sum_{j=1}^k 0 = \ell = \dim{\range{T}}$$
+            as desired.
+
+            \secName{Solution}
+
+            In order to show that $V = \range{T} \oplus \nullS{T}$, we will first show that 
+            $V = \range{T} + \nullS{T}$. 
+
+            Let $v\in V$. See that $v = Tv + (v - Tv)$. 
+
+            Clearly, $Tv\in\range{T}$. Now we will show that $v-Tv\in\nullS{T}$.
+
+            \begin{align*}
+                T(v-Tv) &= Tv - T^2v \\
+                &= Tv - Tv \qquad\text{$T^2=T$ by assumption}\\
+                &= 0
+            \end{align*}
+
+            Thus, $v$ can be written as a sum of an element from $\range{T}$ and $\nullS{T}$. Since $v$ was
+            arbitrary, $v\in V$. Now we will show that this sum is actually a direct sum. We do this by using 
+            Axler 1.45 and show that $\range{T}\cap\nullS{T} = \{0\}$.
+
+            Let $v\in\range{T}\cap\nullS{T}$, since $v\in\range{T}$, there exists some $u\in V$ such that 
+            $Tu = v$. Since $v\in\nullS{T}$, we know that $Tv=0$. Combining these facts, we see:
+            \begin{align*}
+                0 &= Tv  \\
+                &= T(Tu) \\
+                &= T^2u  \\
+                &= Tu    \\
+                &= v
+            \end{align*}
+            So, $v=0$. Thus this intersection is $\{0\}$ as desired. This means that our aforementioned sum
+            is actually a direct sum.
+
+            Now, all that is left is to compute the trace. Our tactic is to use Axler 10.9 and show that $T$
+            has eigenvalues $1$ and $0$ with multiplicty $\dim{\range{T}}$ and $\dim{\nullS{T}}$ respectively.
+
+            Let $\ell = \dim{\range{T}}$ and $k = \dim{\nullS{T}}$, and let
+            $(u_1,\dots,u_\ell)$ and $(v_1,\dots,v_k)$ denote bases of $\range{T}$ and $\nullS{T}$ respectively.
+            For $i=1,\dots,\ell$, since each $u_i\in\range{T}$, we know that there exists some $w_i\in V$ such
+            that $Tw_i = u_i$. This means
+            \begin{align*}
+                Tu_i &= T(Tw_i) \\
+                &= T^2w_i \\
+                &= Tw_i \\
+                &= u_i
+            \end{align*}
+            Thus, $u_i$ is an eigenvector of $T$ with associated eigenvalue $1$.
+
+            Now, for $j=1,\dots,k$, we know $w_k\in\nullS{T}$, so it is an eigenvector of $T$ with associated
+            eigenvalue $0$. Thus we found $\dim{V}$ linearly independent eigenvectors so we have found all 
+            possible eigenvalues. This means that we can appeal to Axler 10.9 to see that 
+            \[
+                \trace{T} = \ell * 1 + k * 0 = \ell = \dim{V}.
+            \]
+            So, we have shown $\trace{T} = \dim{V}$ as desired.
+        \end{solution}
+        \part Let $T_1,\dots,T_m$ be idempotent operators on an $n$-dimensional vector space $V$. Show that
+        if 
+        \[
+            T_1 + \dots + T_m = I
+        \]
+        Then 
+        \[
+            V = \range{T_1}\oplus\dots\oplus\range{T_m}
+        \]
+        and
+        \[
+            T_iT_j = 0,\qquad\qquad i,j=1,\dots,m, i \neq j
+        \]
+        \begin{solution}
+            
+            \secName{Intuition} For this part, we want to use the first part as it is a two part question where
+            the second part seems to give us enough information to possibly use it. While it might look like
+            the direct sum part may be helpful, it won't actually help us. All it could maybe do would be to 
+            give us that $\range{T_2\oplus\dots\oplus T_m} = \nullS{T_1}$. but remember that we can't
+            ``subtract'' over the $\oplus$. (see Exercise 1.C.23)! So this isn't where it'll be helpful. We'll
+            come back to this later after we show the direct sum works.
+
+            For the direct sum, we only know that each $T_i$ is idempotent and that the sum is the identity 
+            operator. Let's use this fact.
+
+            Let $v\in V$. See that
+            \begin{align*}
+                v &= Iv \\
+                &= \left(\sum_{i=1}^mT_i\right)v \\
+                &= \sum_{i=1}^mT_iv
+            \end{align*}
+            So, $V = \sum_{i=1}^m\range{T_i}$. All that is left is to show this is a direct sum. Recall from 
+            Axler 3.78 that if we can show the dimensions of these operaters add up to be the dimension of $V$,
+            then this sum is a direct sum.
+
+            This is where our previous part helps us out! As we can write $I$ as the sum of our $m$ operators, and
+            the fact that the trace is equal to the dimension of the range as we showed above!
+            \begin{align*}
+                \dim{V} &= n \\
+                        &= \trace{I_n} \\
+                        &= \trace{\sum_{i=1}^mT_i} \\
+                        &= \sum_{i=1}^m\trace{T_i} \\
+                        &= \sum_{i=1}^m\dim{\range{{T_i}}}
+            \end{align*}
+            So, the sum of the ranges must be a direct sum as desired.
+
+            Next, we show for all $i\neq j=1,\dots,m$, we have $T_iT_j = 0$.
+            Let $v\in V$, and see for all $j=1,\dots,m$, we have
+            \begin{align*}
+                T_jv &= IT_jv \\
+                     &= \left(\sum_{i=1}^mT_i\right)T_jv \\
+                     &= \sum_{i=1}^mT_iT_jv \\
+                     &= T_j^2v + \sum_{i=1,i\neq j}^mT_iT_jv \\
+                T_jv - T_j^2v &= \sum_{i=1,i\neq j}^mT_iT_jv\\
+                T_jv - T_jv &= \sum_{i=1,i\neq j}^mT_iT_jv\\
+                0 &= \sum_{i=1,i\neq j}^mT_iT_jv
+            \end{align*}
+            See that $T_iT_jv\in\range{T_i}$. Since we have that the sum of these ranges is a direct sum, then
+            because of Axler 1.44 we know that there is a unique way to write $0$ making all of the vectors
+            on the right hand side exactly the $0$ vector. So, since $v$ was arbitrary, we have for all $v\in V$,
+            $i,j=1,\dots,m,i\neq j$:
+            \[
+                T_iT_jv = 0
+            \]
+            Since this is true for all vectors, we know that that the operator $T_iT_j = 0$ as we need!
+
+            \secName{Solution} We will first prove that $V = \range{T_1} + \dots + \range{T_m}$, then argue
+            that it is actually a direct sum.
+
+            Let $v\in V$. Then see:
+            \begin{align*}
+                v &= Iv \\
+                &= \left(\sum_{i=1}^mT_i\right)v \\
+                &= \sum_{i=1}^mT_iv
+            \end{align*}
+            So, $V = \sum_{i=1}^m\range{T_i}$. 
+
+            Next, we will use Axler 3.78. So we will show $\dim V = \sum_{i=1}^m\range{T_i}$.
+
+            See that
+            \begin{align*}
+                \dim{V} &= n\\
+                &= \trace{I_n}\\
+                &= \trace{\sum_{i=1}^mT_i}\\
+                &= \sum_{i=1}^m\trace{T_i}\qquad\text{the trace is linear} \\
+                &= \sum_{i=1}^m\dim{\range{T_i}}\qquad\text{From the previous part}
+            \end{align*}
+            So, since the dimension of the sum of the ranges is equal to the dimension of our space, we have that
+            our sum is a direct sum.
+
+            Next, we will show that for all $i,j\in\{1,\dots,m\}$ such that $i\neq j$ we have
+            \[
+                T_iT_j = 0
+            \]
+
+            We will do this by showing $\nullS{T_iT_j} = V$. 
+
+            Let $v\in V$. See:
+            \begin{align*}
+                T_jv &= IT_jv \\
+                     &= \left(\sum_{i=1}^mT_i\right)T_jv \\
+                     &= \sum_{i=1}^mT_iT_jv \\
+                     &= T_j^2v + \sum_{i=1,i\neq j}^mT_iT_jv \\
+                T_jv - T_j^2v &= \sum_{i=1,i\neq j}^mT_iT_jv\\
+                T_jv - T_jv &= \sum_{i=1,i\neq j}^mT_iT_jv\\
+                0 &= \sum_{i=1,i\neq j}^mT_iT_jv
+            \end{align*}
+            See that $T_iT_jv\in\range{T_i}$. Since we have that the sum of these ranges is a direct sum, then
+            because of Axler 1.44 we know that there is a unique way to write $0$ making all of the vectors
+            on the right hand side exactly the $0$ vector. So, since $v$ was arbitrary, we have for all $v\in V$,
+            $i,j=1,\dots,m,i\neq j$:
+            \[
+                T_iT_jv = 0
+            \]
+            Telling us that $\null{T_iT_j} = V$, so $T_iT_j=0$ as desired.
+        \end{solution}
+    \end{parts}
+    \question Prove or give a counterexample to each of the following statements:
+    \begin{parts}
+        \part Let $T\in\L{R^3}$, and $\dim{\nullS{T}\cap\range{T}}\geq 1$. Then $T$ is nilpotent.
+        \part Let $T\in\L{R^4}$, and $\dim{\nullS{T}\cap\range{T}}\geq 2$. Then $T$ is nilpotent.
+    \end{parts}
+    \begin{solution}
+        
+        \secName{Intuition} This problem is a bit of trial and error, but the idea behind how we approach the 
+        problem is as follows. 
+
+        For ease of notation, let $N = \nullS{T}$ and $R = \range{T}$. With intersections,
+        we can only ever ``shrink'' in that we can lose elements when do an intersection but never gain them. S
+        $\dim{N}\geq \dim{N\cap R}$ and $\dim{R}\geq \dim{N\cap R}$. We can use this to argue about the actual value 
+        of $\dim{N\cap R}$.
+
+        For part (a), we have $3 = \dim{N} + \dim{R}$, and that $\dim{N\cap R} \geq 1$. If we were to have that
+        this dimension was $2$, then by our inequalities above, we get that $3\geq 2 + 2 = 4$, which is nonsense. 
+        So we would need this dimension to be exactly $1$. Since this means that the range and nullspace must have
+        different sizes, so they cannot be the same. So we can think about if an operator can have a range that maps
+        one vector to itself, and a separate linearly independent vector mapping to the nullspace. This is 
+        actually possible! Let $e_1,e_2,e_3$ be the standard basis of $\R^3$, and define an operator $T$ such that
+        \begin{align*}
+            Te_1 &= 0\\
+            Te_2 &= e_1\\
+            Te_3 &= e_3.
+        \end{align*}
+        See that from the first equation, $e_1\in N$, and $e_1\in R$. Thus, $\dim{N\cap R}\geq 1$ as we need in
+        the problem statement, but for any $k\in\mathcal{N}$, we have that 
+        \[
+            T^ke_3 = e_3
+        \]
+        So, $T$ cannot be nilpotent. So the above would be a counter example
+
+        For part (b), however we see from a similar line of reasoning as above, $\dim{N\cap R} \not\geq 3$, so we 
+        have that $\dim{N\cap R} = 2$. Also from a similar argument, as before, we see that $\dim{N} = \dim{R} =
+        \dim{N\cap R} = 2$. By definition both $N,R$ are subsets of $N\cap R$, but all have the same dimension.
+        So we have that $N = N\cap R = R$, so $N = R$. See that if $v\in \R^4$:
+        \begin{align*}
+            Tv\in R &\implies Tv\in N \\
+            &\implies T(Tv) = T^2v = 0
+        \end{align*}
+        Since $v$ was arbitrary, this holds for all $v\in\R^4$, telling us that $T^2=0$ meaning that $T$ is 
+        nilpotent.
+
+        \secName{Aside} We can see that if $\dim{N\cap R} = \dim{V}/2$, then we can show a similar result. Not
+        really relevant for this problem, but still an interesting result to keep in mind!
+
+
+        \secName{Solution}
+
+        For ease of notation, for both parts, we will define $N = \nullS{T}$ and $R = \range{T}$.
+        \begin{parts}
+            \part We will provide a counter example showing this statement is not true in general.
+            Let $e_1,e_2,e_3$ denote the standard basis for $\R^3$. Define the operator $T$ as follows
+        \begin{align*}
+            Te_1 &= 0\\
+            Te_2 &= e_1\\
+            Te_3 &= e_3.
+        \end{align*}
+        From the first equation, $e_1\in N$, and from the second equation, $e_1\in R$. Thus $e_1\in N\cap R$, 
+            telling us that $\dim{N\cap R} \geq 1$ as this part requires. However see that for all $k\in\mathcal{N}$, we have
+            $$
+            T^ke_3 = e_3
+            $$
+            Which means that $T^{\dim{\R^3}}\neq 0$, so $T$ is not nilpotent.
+
+
+            \part We will prove this statement.
+            We first show that $\dim{N\cap R} = 2$. Assume that $\dim{N\cap R} > 2$. From the fundamental 
+            theorem of linear maps, we have
+            \begin{equation}\label{eq:FTLM}
+                4 = \dim{\R^4} = \dim{N} + \dim{R}.
+            \end{equation}
+            However since $N\cap R\in R$ and $ N\cap R\in N$, we know that $\dim{R}\geq \dim{N\cap R}$  and
+            $\dim{N}\geq\dim{N\cap R}$. Plugging this into equation \eqref{eq:FTLM} gives us that
+            \begin{align*}
+                4 &= \dim{N} + \dim{R} \\
+                  &\geq 2*\dim{N\cap R} \\
+                  &> 2*2 \\
+                  &= 4
+            \end{align*}
+            So we have that $4>4$, which is impossible, so we know that $\dim{N\cap R} = 2$. Next, we will
+            argue that $N = N\cap R = R$. The first step is to argue that the dimensions of $N$ and $R$ are 
+            both $2$. WLOG we will do this by proving that $\dim{N} > 2$, and a similar argument will
+            follow for $R$. Pluggin our known inequalities $\dim{R} \geq 2$ and $\dim{N} > 2$ into \eqref{eq:FTLM}
+            , we get
+            \begin{align*}
+                4 &= \dim{N} + \dim{R} \\
+                  &\geq \dim{N} + 2 \\
+                  &> 2 + 2 \\
+                  &= 4.
+            \end{align*}
+            So, $4>4$. Meaning that the dimensions of these three spaces are the same. However, we know that
+            $N\cap R\subset R$ and $N\cap R\subset N$, so we have this intersection is a subset of both $R$ and
+            $N$ of the same dimension, so they must be the same. Giving us 
+            \[
+                N = N\cap R = R.
+            \]
+
+            Finally, we will show that $T$ is nilpotent by showing $T^2v = 0$ for all $v\in V$. 
+
+            Let $v\in V$. See:
+        \begin{align*}
+            Tv\in R &\implies Tv\in N \\
+            &\implies T(Tv) = T^2v = 0
+        \end{align*}
+        Since $v$ was arbitrary, this holds for all $v\in\R^4$, telling us that $T^2=0$ meaning that $T$ is 
+        nilpotent.
+        \end{parts}
+    \end{solution}
+
+    \question Let $V$ be an $n$-dimensional vector space, and let $T_1,\dots,T_{n+1}\in\L{V}$ such that
+    \begin{align}
+        T_iT_j &= T_jT_i \qquad \text{for every }1\leq i\leq j\leq n+1\text{ (the operators commute), and}\label{eq:commute}\\
+        T_1\cdots T_{n+1} &= 0
+    \end{align}
+    \begin{solution}
+        Haven't talked about this one, so waiting to post the solution.
+    \end{solution}
+    \begin{parts}
+        \part Show that there exists some $k$ such that $T_1\cdots T_{k-1}T_{k+1}\cdots T_{n+1} = 0$ as 
+        follows:
+        
+        Show that for every $k$, we have 
+        \begin{enumerate}
+            \item $\range{T_1\cdots T_k}\subset\range{T_1\cdots T_{k-1}}$, and 
+            \item $\range{T_1\cdots T_k}\subset\nullS{T_{k+1}\cdots T_n}$
+        \end{enumerate}
+        
+        Then argue that for some $k$, we must have equality in (1.), and explain why this implies the desired
+        statement
+
+        \part Show that \eqref{eq:commute} is necessary for the previous conclusion by providing three operators
+        (or matrices) $T_1,T_2,T_3\in\L{\R^2}$ with $T_1T_2T_3 = 0$, but $T_1T_2\neq 0$, $T_1T_3\neq 0$, and 
+        $T_2T_3\neq 0$.
+    \end{parts}
 \end{questions}
 
-\section{Axler Problems}
-\begin{questions}
-\end{questions}
+%\section{Axler Problems}
+%\begin{questions}
+%\end{questions}
 
-\section{Other Problems}
-\begin{questions}
-\end{questions}
+%\section{Other Problems}
+%\begin{questions}
+%\end{questions}
 \end{document}

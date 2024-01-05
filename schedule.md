@@ -35,8 +35,8 @@
     * Go Over Practice Prelim 
     * Give out problems before meeting
 * Jan 9, 24. 11am-1pm
+    * Finish practice prelim
+    * Miscellaneous problems brought in
+* Jan 10, 24. 11:30am-1:30pm
     * Last minute review sections
-    * Give out problems before meeting
-* Jan 10, 24. 11am-1pm
-    * Last minute review sections
-    * Give out problems before meeting
+    * Do notesheet if deired
